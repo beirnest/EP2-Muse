@@ -8,15 +8,15 @@
 
 ## Objectives ##
 
-Create an easy-to-use app that allows users to quickly look up information about game rules or stats.
-Allow users to create character sheets based on the attribute, skills, and equipment data from the game.
-Character sheets will update automatically based on user input and can be saved so that the user can access them in the future.
-Allow users to create character sheets manually or automatically by randomly generating stats and equipment.
+- Create an easy-to-use app that allows users to quickly look up information about game rules or stats.
+- Allow users to create character sheets based on the attribute, skills, and equipment data from the game.
+- Character sheets will update automatically based on user input and can be saved so that the user can access them in the future.
+- Allow users to create character sheets manually or automatically by randomly generating stats and equipment.
 
 ## Target Audience ##
 
-Eclipse Phase Gamemasters - People who create the storylines and enforce the rules of the game. They will need to use the app to look up information and quickly generate characters that their players will interact with.
-Eclipse Phase Players - Players of the game who will need to use the app to create and track changes in their character sheets. They may also need to look up game rule information
+- Eclipse Phase Gamemasters - People who create the storylines and enforce the rules of the game. They will need to use the app to look up information and quickly generate characters that their players will interact with.
+- Eclipse Phase Players - Players of the game who will need to use the app to create and track changes in their character sheets. They may also need to look up game rule information
 
 ## Technology ##
 
