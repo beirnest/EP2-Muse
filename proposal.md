@@ -11,7 +11,7 @@
 - Create an easy-to-use app that allows users to quickly look up information about game rules or stats.
 - Allow users to create character sheets based on the attribute, skills, and equipment data from the game.
 - Character sheets will update automatically based on user input and can be saved so that the user can access them in the future.
-- Allow users to create character sheets manually or automatically by randomly generating stats and equipment.
+- Allow users to create character sheets manually based on the information found in the [Eclipse Phase 2 Character Sheet](https://www.eclipsephase.com/wp-content/uploads/2021/12/EclipsePhase_SecondEdition_CharacterSheet.pdf) or automatically by randomly generating stats and equipment.
 
 ## Target Audience ##
 
