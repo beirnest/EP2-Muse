@@ -18,15 +18,18 @@ class User(db.Model):
     id = db.Column(db.Integer,
                    primary_key=True,
                    autoincrement=True)
+    username = db.Column(db.Text,
+                     nullable=False)
     first_name = db.Column(db.Text,
                      nullable=False)
     last_name = db.Column(db.Text,
                     nullable=False)                 
     password = db.Column(db.Text, nullable=False)
     email = db.Column(db.Text, nullable=False)
+    characters = db.relationship('Character')
 
     @classmethod
-    def signup(cls, username, email, password, image_url):
+    def signup(cls, username, first_name, last_name, password, email):
         """Sign up user.
 
         Hashes password and adds user to system.
@@ -36,9 +39,10 @@ class User(db.Model):
 
         user = User(
             username=username,
-            email=email,
+            first_name=first_name,
+            last_name=last_name,
             password=hashed_pwd,
-            image_url=image_url,
+            email=email
         )
 
         db.session.add(user)
@@ -64,176 +68,175 @@ class User(db.Model):
 
         return False
     
+class Character(db.Model):
+    """Character."""
 
-class Gear_Type(db.Model):
-    """Gear Type"""
-
-    __tablename__ = "gear_types"
+    __tablename__ = "characters"
 
     id = db.Column(db.Integer,
                    primary_key=True,
                    autoincrement=True)
+    user = db.Column(db.Integer, 
+                     db.ForeignKey('users.id'),
+                     nullable=False)
     name = db.Column(db.Text,
                      nullable=False)
+    background = db.Column(db.Integer,
+                    nullable=False)      
+    career = db.Column(db.Integer,
+                    nullable=False)
+    faction = db.Column(db.Integer,
+                    nullable=False)     
+    aptitude = db.Column(db.Integer,
+                    nullable=False)    
+    languages = db.Column(db.Text,
+                     nullable=False)  
+    morph = db.Column(db.Text,
+                     nullable=False) 
     
-class Aptitude(db.Model):
-    """Aptitude"""
+class Char_Armor(db.Model):
+    """Character Armor"""
 
-    __tablename__ = "aptitudes"
+    __tablename__ = "char_armor"
 
     id = db.Column(db.Integer,
                    primary_key=True,
                    autoincrement=True)
-    name = db.Column(db.Text,
-                     nullable=False)
-    description = db.Column(db.Text,
-                     nullable=False, default="No Description")
-    short_name = db.Column(db.Text,
-                     nullable=False)
-    skills = db.Column(db.Text,
-                     nullable=False)
+    user = db.Column(db.Integer, db.ForeignKey('users.id'),
+                     nullable=False) 
+    armor = db.Column(db.Integer,
+                     nullable=False) 
     
-class Background(db.Model):
-    """Background"""
+class Char_Bot(db.Model):
+    """Character Bots"""
 
-    __tablename__ = "backgrounds"
+    __tablename__ = "char_bots"
 
     id = db.Column(db.Integer,
                    primary_key=True,
                    autoincrement=True)
-    name = db.Column(db.Text,
-                     nullable=False)
-    description = db.Column(db.Text,
-                     nullable=False, default="No Description")
-    skills = db.Column(db.Text,
-                     nullable=False)
+    user = db.Column(db.Integer, db.ForeignKey('users.id'),
+                     nullable=False) 
+    bot = db.Column(db.Integer,
+                     nullable=False) 
     
-class Career(db.Model):
-    """Career"""
+class Char_Creature(db.Model):
+    """Character Creatures"""
 
-    __tablename__ = "careers"
+    __tablename__ = "char_creatures"
 
     id = db.Column(db.Integer,
                    primary_key=True,
                    autoincrement=True)
-    name = db.Column(db.Text,
-                     nullable=False)
-    description = db.Column(db.Text,
-                     nullable=False, default="No Description")
-    skills = db.Column(db.Text,
-                     nullable=False)
+    user = db.Column(db.Integer, db.ForeignKey('users.id'),
+                     nullable=False) 
+    creature = db.Column(db.Integer,
+                     nullable=False) 
     
-class Interest(db.Model):
-    """Interest"""
+class Char_Drug(db.Model):
+    """Character Drug"""
 
-    __tablename__ = "interests"
-
-    id = db.Column(db.Integer,
-                   primary_key=True,
-                   autoincrement=True)
-    name = db.Column(db.Text,
-                     nullable=False)
-    description = db.Column(db.Text,
-                     nullable=False, default="No Description")
-    skills = db.Column(db.Text,
-                     nullable=False)
-
-class Faction(db.Model):
-    """Faction"""
-
-    __tablename__ = "factions"
+    __tablename__ = "char_drugs"
 
     id = db.Column(db.Integer,
                    primary_key=True,
                    autoincrement=True)
-    name = db.Column(db.Text,
-                     nullable=False)
-    description = db.Column(db.Text,
-                     nullable=False, default="No Description")
-    skills = db.Column(db.Text,
-                     nullable=False)
+    user = db.Column(db.Integer, db.ForeignKey('users.id'),
+                     nullable=False) 
+    drug = db.Column(db.Integer,
+                     nullable=False) 
+
+class Char_Gear(db.Model):
+    """Character Gear"""
+
+    __tablename__ = "char_gear"
+
+    id = db.Column(db.Integer,
+                   primary_key=True,
+                   autoincrement=True)
+    user = db.Column(db.Integer, db.ForeignKey('users.id'),
+                     nullable=False) 
+    item = db.Column(db.Integer,
+                     nullable=False) 
     
-class Morph_Type(db.Model):
-    """Morph Type"""
+class Char_Pool(db.Model):
+    """Character Pool"""
 
-    __tablename__ = "morph_types"
+    __tablename__ = "char_pools"
 
     id = db.Column(db.Integer,
                    primary_key=True,
                    autoincrement=True)
-    name = db.Column(db.Text,
+    user = db.Column(db.Integer, db.ForeignKey('users.id'),
+                     nullable=False) 
+    pool = db.Column(db.Integer,
+                     nullable=False) 
+    amt = db.Column(db.Integer,
                      nullable=False)
-    description = db.Column(db.Text,
-                     nullable=False, default="No Description")
-    biological = db.Column(db.Boolean,
-                     nullable=False)
+
+class Char_Reputation(db.Model):
+    """Character Reputation"""
+
+    __tablename__ = "char_reputations"
+
+    id = db.Column(db.Integer,
+                   primary_key=True,
+                   autoincrement=True)
+    user = db.Column(db.Integer, db.ForeignKey('users.id'),
+                     nullable=False) 
+    reputation = db.Column(db.Integer,
+                     nullable=False)  
     
-class Morph(db.Model):
-    """Morph"""
+class Char_Skill(db.Model):
+    """Character Skill"""
 
-    __tablename__ = "morphs"
+    __tablename__ = "char_skills"
 
     id = db.Column(db.Integer,
                    primary_key=True,
                    autoincrement=True)
-    name = db.Column(db.Text,
-                     nullable=False)
-    morph_type = db.Column(db.Int,
-                     nullable=False)
-    cost = db.Column(db.Int,
-                     nullable=False)
-    availability = db.Column(db.Int,
-                     nullable=False)
-    wound_threshold = db.Column(db.Int,
-                     nullable=False)
-    durability = db.Column(db.Int,
-                     nullable=False)
-    death_rating = db.Column(db.Int,
-                     nullable=False)
-    pools = db.Column(db.Text,
-                     nullable=False)
-    movement_rate = db.Column(db.Text,
-                     nullable=False)
-    ware = db.Column(db.Text,
-                     nullable=True)
-    morph_traits = db.Column(db.Text,
-                     nullable=False)
-    common_extras = db.Column(db.Text,
-                     nullable=True)
-    notes = db.Column(db.Text,
-                     nullable=True)
-    common_shape_adjustments = db.Column(db.Text,
-                     nullable=True)
-    image = db.Column(db.Text,
-                     nullable=False)
-    description = db.Column(db.Text,
-                     nullable=False, default="No Description")
+    user = db.Column(db.Integer, db.ForeignKey('users.id'),
+                     nullable=False) 
+    skill = db.Column(db.Integer,
+                     nullable=False) 
+    skill = db.Column(db.Integer,
+                     nullable=False) 
     
-class Pool(db.Model):
-    """Pool"""
+class Char_Sleight(db.Model):
+    """Character Sleight"""
 
-    __tablename__ = "pools"
+    __tablename__ = "char_sleights"
 
     id = db.Column(db.Integer,
                    primary_key=True,
                    autoincrement=True)
-    name = db.Column(db.Text,
-                     nullable=False)
-    effects = db.Column(db.Text,
-                     nullable=False, default="No Description")
-    checks = db.Column(db.Text,
-                     nullable=False)
+    user = db.Column(db.Integer, db.ForeignKey('users.id'),
+                     nullable=False) 
+    sleight = db.Column(db.Integer,
+                     nullable=False) 
     
-class Reputation(db.Model):
-    """Reputation"""
+class Char_Trait(db.Model):
+    """Character Trait"""
 
-    __tablename__ = "reputations"
+    __tablename__ = "char_traits"
 
     id = db.Column(db.Integer,
                    primary_key=True,
                    autoincrement=True)
-    name = db.Column(db.Text,
-                     nullable=False)
-    description = db.Column(db.Text,
-                     nullable=False, default="No Description")
+    user = db.Column(db.Integer, db.ForeignKey('users.id'),
+                     nullable=False) 
+    trait = db.Column(db.Integer,
+                     nullable=False) 
+    
+class Char_Vehicle(db.Model):
+    """Character Vehicle"""
 
+    __tablename__ = "char_vehicles"
+
+    id = db.Column(db.Integer,
+                   primary_key=True,
+                   autoincrement=True)
+    user = db.Column(db.Integer, db.ForeignKey('users.id'),
+                     nullable=False) 
+    vehicle = db.Column(db.Integer,
+                     nullable=False)
