@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container-fluid bg-body-primary mt-3">
+        <div data-bs-theme="dark"class="row p-1 justify-content-evenly">
+            <div class="row">
+                <div class="col-lg-1 mt-1 me-5 d-none d-lg-block">
+                        <div id ="left-nav" class="btn-group-vertical">    
+                        </div>
+                </div>
+                <div class="col p-3 me-5 mt-1 text-body bg-body-secondary rounded-end border border-info">
+                    <h2><p id="name" class="text-info my-2"></p>{{ category|upper }}</h2>
+                    <div class="col p-3 table-responsive">
+                      <table class="table table-dark table-bordered border-info table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Biological</th>
+                            </tr>
+                        </thead>
+                        <tbody id="morph-list">
+                        </tbody>
+                      </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/static/js/gear.js"></script>
+    <script src="/static/js/morphs.js"></script>
+    {% endblock %}

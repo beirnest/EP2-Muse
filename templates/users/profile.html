@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row full-width">
+  <div class="container">
+    <div class="row text-center">
+      <div class="col-12">
+          <div class="row justify-content-center"><p class="justify-content-center">Username: {{ user.username }}</p><p>Email: {{ user.email}}</p></div>
+          <div class="row justify-content-center"></div>
+          {% if g.user.id == user.id %}
+            <btn><a href="/users/profile" class="btn btn-outline-secondary m-2">Edit Profile</a></btn>
+            <form method="POST" action="/users/delete" class="form-inline">
+              <button class="btn btn-outline-danger ml-2">Delete Profile</button>
+            </form>
+           {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
