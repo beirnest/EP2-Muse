@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class = container-fluid bg-body-primary mt-3>
+        <div data-bs-theme="dark"class="row p-1 justify-content-evenly">
+            <div class="row justify-content-center">
+                <div class="col-lg-8 p-3 me-5 mt-1 text-body bg-body-secondary rounded-end border border-info">
+                    <div>
+                        {% with messages = get_flashed_messages() %}
+                        {% if messages %}
+                            {% for message in messages %}
+                                {{ message }}
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+                    </div>
+                    
+                    <form id="add-character-form" method="POST">
+                        {{ form.hidden_tag() }} <!--add type=hidden form fields -->
+                
+                        {% for field in form
+                            if field.widget.input_type != 'hidden' %}
+                
+                        <p>
+                            {{ field.label }}
+                            {{ field }}
+                
+                            {% for error in field.errors %}
+                                {{ error }}
+                                {% endfor %}
+                        </p>
+                        {% endfor %}
+                        <button type="submit">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+

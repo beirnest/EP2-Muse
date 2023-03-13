@@ -33,11 +33,13 @@
                   <li><a class="dropdown-item text-info" href="/morphs/types">Morphs</a></li>
                   <li><hr class="dropdown-divider"></li>
                   <li><a class="dropdown-item text-info" href="/gear/categories">Gear</a></li>
-                  
                 </ul>
               </li>
-              <li class="nav-item">
-                <a class="nav-link text-info" aria-current="page" href="#">Character Sheets</a>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle text-info" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Characters</a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item text-info" href="/characters/add">Add Character</a></li>
+                </ul>
               </li>
             </ul>
             <form class="d-flex" role="search">
@@ -67,6 +69,15 @@
     {% block content %}
     <div class="container-fluid bg-body-primary mt-3">
         <div data-bs-theme="dark"class="row p-1 justify-content-evenly">
+          <div>
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    {{ message }}
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        </div>
             <div class="row">
                 <div class="col-lg-8 p-3 me-5 mt-1 text-body bg-body-secondary rounded-end border border-info">
                     <img src="\static\images\EclipsePhase_Logo_White.png" class="img-fluid">

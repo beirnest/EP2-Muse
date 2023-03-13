@@ -1,7 +1,8 @@
 from flask import Flask, render_template, flash, redirect, session, g
-from forms import UserAddForm, LoginForm
+from forms import UserAddForm, LoginForm, AddCharacterForm
 from flask_cors import CORS
-from models import db, connect_db, User
+from models import db, connect_db, User, Character
+import requests
 
 CURR_USER_KEY = "curr_user"
 
@@ -14,6 +15,7 @@ if __name__ == '__app__':
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///ep2_muse'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ECHO'] = False
+app.config['SECRET_KEY'] = "leggolegoo"
 
 connect_db(app)
 
@@ -91,8 +93,8 @@ def login():
             do_login(user)
             flash(f"Hello, {user.username}!", "success")
             return redirect("/")
-
-        flash("Invalid credentials.", 'danger')
+        else:
+            flash("Invalid credentials.", 'danger')
 
     return render_template('users/login.html', form=form, user = g.user)
 
@@ -142,3 +144,48 @@ def show_morph_types():
     """Show list of types of morph"""
 
     return render_template('morphs.html', user=g.user, category="morphs")
+
+@app.route('/characters/add', methods=["GET", "POST"])
+def show_add_character():
+    """Show character sheet creation page form and add character to database if form validates."""
+
+    form = AddCharacterForm()
+
+    if not g.user:
+        flash("You must be logged in to add a character.", "danger")
+        return redirect("/")
+    if form.validate_on_submit():
+        user = g.user.id
+        name = form.name.data
+        backgrounds = form.background.data
+        background = get_item_index("backgrounds", backgrounds)
+        careers = form.career.data
+        career = get_item_index("careers", careers)
+        factions = form.faction.data
+        faction = get_item_index("factions", factions)
+        aptitudes = form.aptitude_template.data
+        aptitude = get_item_index("aptitudes/templates", aptitudes)
+        languages = form.languages.data
+        interests = form.interests.data
+        interest = get_item_index("interests", interests)
+        morphs = form.morph.data
+        morph = get_item_index("morphs", morphs)
+        character = Character(user=user, name=name, background=background, career=career, faction=faction, aptitude=aptitude, languages=languages, interests=interest, morph=morph)
+        db.session.add(character)
+        db.session.commit()
+        flash("Your character has been sucessfully created.")
+        return redirect("/")
+    else:
+        return render_template('/add_character.html', form=form, user=g.user)
+
+    
+def get_item_index(stat, data):
+    r = requests.get(f'https://ep2-data-api.herokuapp.com/{stat}') 
+    stats = r.json()
+    count = 0
+    for item in stats:
+        if item['name'] == data:
+            return count
+        else:
+            count += 1
+    return count

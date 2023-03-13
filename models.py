@@ -91,7 +91,9 @@ class Character(db.Model):
                     nullable=False)    
     languages = db.Column(db.Text,
                      nullable=False)  
-    morph = db.Column(db.Text,
+    interests = db.Column(db.Integer,
+                     nullable=False)
+    morph = db.Column(db.Integer,
                      nullable=False) 
     
 class Char_Armor(db.Model):
