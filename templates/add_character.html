@@ -3,7 +3,7 @@
     <div class = container-fluid bg-body-primary mt-3>
         <div data-bs-theme="dark"class="row p-1 justify-content-evenly">
             <div class="row justify-content-center">
-                <div class="col-lg-8 p-3 me-5 mt-1 text-body bg-body-secondary rounded-end border border-info">
+                <div class="col-lg-7 p-3 mx-5 mt-1 text-body bg-body-secondary rounded-end border border-info">
                     <div>
                         {% with messages = get_flashed_messages() %}
                         {% if messages %}
@@ -32,6 +32,8 @@
                         <button type="submit">Submit</button>
                     </form>
                 </div>
+                <div id="char-choices" class="col-lg-3 p-3 mt-1 text-body bg-body-secondary rounded-end border border-info">
+                </div> 
             </div>
         </div>
     </div>

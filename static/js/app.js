@@ -1,3 +1,12 @@
+const statsObj = {
+    background: "None",
+    career: "None",
+    interests: "None",
+    faction: "None",
+    aptitude_template: "None",
+    morph: "None"
+};
+
 $('btn').click(function() { window.location=`/gear/category/${self.id}`; });
 
 async function load_bg_list() {
@@ -15,6 +24,29 @@ async function load_bg_list() {
         );
     }
 };
+
+$( "select" ).change(function (evt) {
+      let str = "";
+      str = evt.target.value;
+      if (str != "--- Select One ---"){
+        console.log(statsObj)
+        statsObj[evt.target.id] = str;
+      }
+    $( "#char-choices" ).html(`
+    <p>Background: ${statsObj.background}
+    </p>
+    <p>Career: ${statsObj.career}
+    </p>
+    <p>Interests: ${statsObj.interests}
+    </p>
+    <p>Faction: ${statsObj.faction}
+    </p>
+    <p>Aptitude Template: ${statsObj.aptitude_template}
+    </p>
+    <p>Morph: ${statsObj.morph}
+    </p>
+    `);
+  }).change();
 
 async function load_career_list() {
     let request = await axios.get('https://ep2-data-api.herokuapp.com/careers');
