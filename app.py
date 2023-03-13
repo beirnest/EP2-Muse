@@ -12,7 +12,7 @@ CORS(app)
 if __name__ == '__app__':
     app.run()
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///ep2_muse'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://mapigihozmrpjk:2536215d13676603ea2478e31c13217403ad613b2d9a48d72e29d4b76da4a91c@ec2-3-93-160-246.compute-1.amazonaws.com:5432/dfjcshlt7ckrtq'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ECHO'] = False
 app.config['SECRET_KEY'] = "leggolegoo"
