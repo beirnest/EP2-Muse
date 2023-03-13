@@ -3,6 +3,8 @@ from forms import UserAddForm, LoginForm, AddCharacterForm
 from flask_cors import CORS
 from models import db, connect_db, User, Character
 import requests
+import os
+
 
 CURR_USER_KEY = "curr_user"
 
@@ -12,6 +14,9 @@ CORS(app)
 if __name__ == '__app__':
     app.run()
 
+uri = os.getenv("postgres://mapigihozmrpjk:2536215d13676603ea2478e31c13217403ad613b2d9a48d72e29d4b76da4a91c@ec2-3-93-160-246.compute-1.amazonaws.com:5432/dfjcshlt7ckrtq")  # or other relevant config var
+if uri.startswith("postgres://"):
+    uri = uri.replace("postgres://", "postgresql://", 1)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://mapigihozmrpjk:2536215d13676603ea2478e31c13217403ad613b2d9a48d72e29d4b76da4a91c@ec2-3-93-160-246.compute-1.amazonaws.com:5432/dfjcshlt7ckrtq'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ECHO'] = False
