@@ -76,7 +76,7 @@ class Character(db.Model):
     id = db.Column(db.Integer,
                    primary_key=True,
                    autoincrement=True)
-    user = db.Column(db.Integer, 
+    user_id = db.Column(db.Integer, 
                      db.ForeignKey('users.id'),
                      nullable=False)
     name = db.Column(db.Text,
@@ -104,7 +104,7 @@ class Char_Armor(db.Model):
     id = db.Column(db.Integer,
                    primary_key=True,
                    autoincrement=True)
-    user = db.Column(db.Integer, db.ForeignKey('users.id'),
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'),
                      nullable=False) 
     armor = db.Column(db.Integer,
                      nullable=False) 
@@ -117,7 +117,7 @@ class Char_Bot(db.Model):
     id = db.Column(db.Integer,
                    primary_key=True,
                    autoincrement=True)
-    user = db.Column(db.Integer, db.ForeignKey('users.id'),
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'),
                      nullable=False) 
     bot = db.Column(db.Integer,
                      nullable=False) 
@@ -143,7 +143,7 @@ class Char_Drug(db.Model):
     id = db.Column(db.Integer,
                    primary_key=True,
                    autoincrement=True)
-    user = db.Column(db.Integer, db.ForeignKey('users.id'),
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'),
                      nullable=False) 
     drug = db.Column(db.Integer,
                      nullable=False) 
@@ -156,7 +156,7 @@ class Char_Gear(db.Model):
     id = db.Column(db.Integer,
                    primary_key=True,
                    autoincrement=True)
-    user = db.Column(db.Integer, db.ForeignKey('users.id'),
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'),
                      nullable=False) 
     item = db.Column(db.Integer,
                      nullable=False) 
@@ -169,7 +169,7 @@ class Char_Pool(db.Model):
     id = db.Column(db.Integer,
                    primary_key=True,
                    autoincrement=True)
-    user = db.Column(db.Integer, db.ForeignKey('users.id'),
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'),
                      nullable=False) 
     pool = db.Column(db.Integer,
                      nullable=False) 
@@ -197,7 +197,7 @@ class Char_Skill(db.Model):
     id = db.Column(db.Integer,
                    primary_key=True,
                    autoincrement=True)
-    user = db.Column(db.Integer, db.ForeignKey('users.id'),
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'),
                      nullable=False) 
     skill = db.Column(db.Integer,
                      nullable=False) 
@@ -225,7 +225,7 @@ class Char_Trait(db.Model):
     id = db.Column(db.Integer,
                    primary_key=True,
                    autoincrement=True)
-    user = db.Column(db.Integer, db.ForeignKey('users.id'),
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'),
                      nullable=False) 
     trait = db.Column(db.Integer,
                      nullable=False) 
@@ -238,7 +238,7 @@ class Char_Vehicle(db.Model):
     id = db.Column(db.Integer,
                    primary_key=True,
                    autoincrement=True)
-    user = db.Column(db.Integer, db.ForeignKey('users.id'),
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'),
                      nullable=False) 
     vehicle = db.Column(db.Integer,
                      nullable=False)

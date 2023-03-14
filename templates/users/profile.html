@@ -8,11 +8,17 @@
           <div class="row justify-content-center"><p class="justify-content-center">Username: {{ user.username }}</p><p>Email: {{ user.email}}</p></div>
           <div class="row justify-content-center"></div>
           {% if g.user.id == user.id %}
-            <btn><a href="/users/profile" class="btn btn-outline-secondary m-2">Edit Profile</a></btn>
+            <btn><a href="/users/{{user.id}}/edit" class="btn btn-outline-secondary m-2">Edit Profile</a></btn>
             <form method="POST" action="/users/delete" class="form-inline">
               <button class="btn btn-outline-danger ml-2">Delete Profile</button>
             </form>
            {% endif %}
+           <ul>
+              <h2>Characters</h2>
+              {% for character in characters %}
+              <li>{{ character.name }}</li>
+              {% endfor %}
+           </ul>   
       </div>
     </div>
   </div>

@@ -1,5 +1,5 @@
 from flask import Flask, render_template, flash, redirect, session, g
-from forms import UserAddForm, LoginForm, AddCharacterForm
+from forms import UserAddForm, LoginForm, AddCharacterForm, EditUserForm
 from flask_cors import CORS
 from models import db, connect_db, User, Character
 import requests
@@ -120,8 +120,44 @@ def users_show(user_id):
     """Show user profile."""
 
     user = User.query.get_or_404(user_id)
+    print(user_id)
+    characters = (Character
+                    .query
+                    .filter(Character.user == 3)
+                    .limit(100)
+                    .all())
     
-    return render_template('users/profile.html', user=user)
+    return render_template('users/profile.html', user=user, characters=characters)
+
+@app.route('/users/<int:user_id>/edit', methods=["GET", "POST"])
+def users_edit(user_id):
+    """Edit user profile."""
+
+    form = EditUserForm()
+
+
+    if user_id != g.user.id:
+        flash("Access unauthorized.", "danger")
+        return redirect("/")
+    else:
+        user = User.query.get_or_404(g.user.id)
+        if form.validate():
+            pwd_check = User.authenticate(form.username.data,
+                                 form.password.data)
+            if pwd_check:
+                user.username = form.username.data
+                user.email = form.email.data
+                user.image_url = form.image_url.data
+                user.header_image_url = form.header_image_url.data
+                user.bio = form.bio.data
+                db.session.commit()
+                return redirect(f"/users/{user.id}")
+
+            else:
+                flash("Invalid credentials.", 'danger')
+                return render_template('users/edit.html', user=user, form=form)
+        else: 
+            return render_template('users/edit.html', user=user, form=form)
 
 @app.route('/gear/categories')
 def show_gear_categories():
@@ -172,7 +208,7 @@ def show_add_character():
         interest = get_item_index("interests", interests)
         morphs = form.morph.data
         morph = get_item_index("morphs", morphs)
-        character = Character(user=user, name=name, background=background, career=career, faction=faction, aptitude=aptitude, languages=languages, interests=interest, morph=morph)
+        character = Character(user_id=user, name=name, background=background, career=career, faction=faction, aptitude=aptitude, languages=languages, interests=interest, morph=morph)
         db.session.add(character)
         db.session.commit()
         flash("Your character has been sucessfully created.")
