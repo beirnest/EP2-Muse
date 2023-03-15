@@ -21,6 +21,7 @@ app.config['SECRET_KEY'] = "leggolegoo"
 
 connect_db(app)
 
+#---Registration/Authenticatation Related Stuff--- 
 @app.before_request
 def add_user_to_g():
     """If we're logged in, add curr user to Flask global."""
@@ -115,15 +116,16 @@ def load_home():
 
     return render_template('base.html', user = g.user)
 
+#---User Profile Related routes
+
 @app.route('/users/<int:user_id>')
 def users_show(user_id):
     """Show user profile."""
 
     user = User.query.get_or_404(user_id)
-    print(user_id)
     characters = (Character
                     .query
-                    .filter(Character.user == 3)
+                    .filter(Character.user_id == user_id)
                     .limit(100)
                     .all())
     
@@ -158,6 +160,8 @@ def users_edit(user_id):
                 return render_template('users/edit.html', user=user, form=form)
         else: 
             return render_template('users/edit.html', user=user, form=form)
+        
+#---Routes for Gear-------------------------------------------------------------------
 
 @app.route('/gear/categories')
 def show_gear_categories():
@@ -171,17 +175,62 @@ def show_gear_from_category(category):
     
     return render_template('gear.html', user=g.user, category=category)
 
+@app.route('/gear/categories/<category>/<int:id>')
+def show_single_gear_item(category, id):
+    """Show details about a specific piece of gear"""
+
+    r = requests.get(f'https://ep2-data-api.herokuapp.com/gear/categories/{category}/{id}') 
+    gear_item = r.json()
+    
+    return render_template('gear_item.html', user=g.user, category=category, gear_item=gear_item)
+
+#---Stat related routes---
+
 @app.route('/<category>')
 def show_character_stat_category(category):
     """Show list of data from a specific category"""
 
     return render_template(f'/stats/{category}.html', user=g.user, category=category)
 
+@app.route('/<category>/<int:id>')
+def show_single_stat(category, id):
+    """Show a single stat"""
+
+    r = requests.get(f'https://ep2-data-api.herokuapp.com/{category}/{id}') 
+    stat = r.json()
+
+    return render_template(f'/stats/single_stat.html', user=g.user, stat=stat)
+
 @app.route('/morphs/types')
 def show_morph_types():
     """Show list of types of morph"""
 
     return render_template('morphs.html', user=g.user, category="morphs")
+
+#---Characer Routes--
+
+@app.route('/characters/<int:char_id>', methods=["GET", "POST"])
+def show_character(char_id):
+    """Show single character page"""
+
+    character = Character.query.get_or_404(char_id)
+    if g.user.id != character.user_id:
+        flash("You are unable to view this character.", "danger")
+        return redirect("/")
+    else:
+        b = requests.get(f'https://ep2-data-api.herokuapp.com/backgrounds/{character.background}') 
+        background = b.json()
+        c = requests.get(f'https://ep2-data-api.herokuapp.com/careers/{character.career}') 
+        career = c.json()
+        i = requests.get(f'https://ep2-data-api.herokuapp.com/interests/{character.interests}') 
+        interests = i.json()
+        f = requests.get(f'https://ep2-data-api.herokuapp.com/factions/{character.faction}') 
+        faction = f.json()
+        a = requests.get(f'https://ep2-data-api.herokuapp.com/aptitudes/templates/{character.aptitude}') 
+        aptitude = a.json()
+        m = requests.get(f'https://ep2-data-api.herokuapp.com/morphs/{character.morph}') 
+        morph = m.json()
+        return render_template('/view_character.html', user=g.user, character=character, background=background, career=career, interests=interests, faction=faction, aptitude=aptitude, morph=morph)
 
 @app.route('/characters/add', methods=["GET", "POST"])
 def show_add_character():
@@ -215,9 +264,29 @@ def show_add_character():
         return redirect("/")
     else:
         return render_template('/add_character.html', form=form, user=g.user)
+    
+@app.route('/characters/my')
+def load_my_character_list():
+    """Load user's character list"""
 
+    if not g.user:
+        flash("You must be logged in to add a character.", "danger")
+        return redirect("/")
+    else:
+        user = User.query.get_or_404(g.user.id)
+        characters = (Character
+                    .query
+                    .filter(Character.user_id == g.user.id)
+                    .limit(100)
+                    .all())
+        return render_template('my_characters.html', user=user, characters=characters)
+
+
+
+#---Utility Functions
     
 def get_item_index(stat, data):
+    """Find index for certain stat items from JSON response dictionary"""
     r = requests.get(f'https://ep2-data-api.herokuapp.com/{stat}') 
     stats = r.json()
     count = 0

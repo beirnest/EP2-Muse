@@ -13,12 +13,10 @@
               <button class="btn btn-outline-danger ml-2">Delete Profile</button>
             </form>
            {% endif %}
-           <ul>
               <h2>Characters</h2>
               {% for character in characters %}
-              <li>{{ character.name }}</li>
+              <p><a href="/characters/{{ character.id }}">{{ character.name }}</a></p>
               {% endfor %}
-           </ul>   
       </div>
     </div>
   </div>

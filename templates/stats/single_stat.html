@@ -9,19 +9,11 @@
                         </div>
                 </div>
                 <div class="col p-3 me-5 mt-1 text-body bg-body-secondary rounded-end border border-info">
-                    <h2><p id="name" class="text-info my-2"></p>{{ category|upper }}</h2>
+                    <h2><p id="name" class="text-info my-2"></p>{{ stat.name|upper }}</h2>
                     <div class="col p-3">
-                      <table class="table table-dark table-bordered border-info table-striped table-hover">
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Abbrevation</th>
-                                <th>Description</th>
-                            </tr>
-                        </thead>
-                        <tbody id="aptitude-list">
-                        </tbody>
-                      </table>
+                      {% for key, value in stat.items() %}
+                      <p><strong>{{ key }}:</strong>{{ value }}</p>
+                      {% endfor %}
                     </div>
                 </div>
             </div>

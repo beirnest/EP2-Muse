@@ -33,18 +33,18 @@ $( "select" ).change(function (evt) {
         statsObj[evt.target.id] = str;
       }
     $( "#char-choices" ).html(`
-    <p>Background: ${statsObj.background}
-    </p>
-    <p>Career: ${statsObj.career}
-    </p>
-    <p>Interests: ${statsObj.interests}
-    </p>
-    <p>Faction: ${statsObj.faction}
-    </p>
-    <p>Aptitude Template: ${statsObj.aptitude_template}
-    </p>
-    <p>Morph: ${statsObj.morph}
-    </p>
+    <h4>Background: ${statsObj.background}
+    </h4>
+    <h4>Career: ${statsObj.career}
+    </h4>
+    <h4>Interests: ${statsObj.interests}
+    </h4>
+    <h4>Faction: ${statsObj.faction}
+    </h4>
+    <h4>Aptitude Template: ${statsObj.aptitude_template}
+    </h4>
+    <h4>Morph: ${statsObj.morph}
+    </h4>
     `);
   }).change();
 
@@ -138,21 +138,27 @@ $(async function() {
     }
     else if (windowLoc == "/aptitudes") {
         load_aptitudes();
+        load_stats_nav();
     }
     else if (windowLoc == "/backgrounds" || windowLoc == "/careers" || windowLoc == "/factions" || windowLoc == "/interests" || windowLoc == "/skills" || windowLoc == "/reputations") {
         load_backgrounds();
+        load_stats_nav();
     }
     else if (windowLoc == "/sleights") {
         load_sleights();
+        load_stats_nav();
     }
     else if (windowLoc == "/traits") {
         load_traits();
+        load_stats_nav();
     }
     else if (windowLoc == "/pools") {
         load_pools();
+        load_stats_nav();
     }
     else if (windowLoc == "/morphs/types") {
         load_morph_types();
+        load_stats_nav();
     }
     else if (windowLoc == "/characters/add") {
         load_bg_list();

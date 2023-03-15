@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row full-width">
+  <div class="container">
+    <div class="row text-center">
+      <div class="col-12">
+          <div class="row justify-content-center"></div>
+              <h2>Characters</h2>
+              {% for character in characters %}
+              <p><a href="/characters/{{ character.id }}">{{ character.name }}</a></p>
+              {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
