@@ -4,11 +4,7 @@
     <div class="container-fluid bg-body-primary mt-3">
         <div data-bs-theme="dark"class="row p-1 justify-content-evenly">
             <div class="row">
-                <div class="col-lg-1 mt-1 me-5 d-none d-lg-block">
-                        <div id ="left-nav" class="btn-group-vertical">    
-                        </div>
-                </div>
-                <div class="col p-3 me-5 mt-1 text-body bg-body-secondary rounded-end border border-info">
+                <div class="col p-3 mt-1 text-body bg-body-secondary rounded border border-info">
                     <h2><p id="name" class="text-info my-2"></p>{{ character.name }}</h2>
                     <div class="col p-3 table-responsive">
                       <p>Background: {{ background.name }}</p>
@@ -23,6 +19,4 @@
             </div>
         </div>
     </div>
-    <script src="/static/js/gear.js"></script>
-    <script src="/static/js/morphs.js"></script>
     {% endblock %}

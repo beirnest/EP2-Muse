@@ -29,7 +29,6 @@ $( "select" ).change(function (evt) {
       let str = "";
       str = evt.target.value;
       if (str != "--- Select One ---"){
-        console.log(statsObj)
         statsObj[evt.target.id] = str;
       }
     $( "#char-choices" ).html(`
@@ -156,9 +155,9 @@ $(async function() {
         load_pools();
         load_stats_nav();
     }
-    else if (windowLoc == "/morphs/types") {
+    else if (windowLoc.indexOf("morphs/") > -1) {
         load_morph_types();
-        load_stats_nav();
+        load_morphs_nav();
     }
     else if (windowLoc == "/characters/add") {
         load_bg_list();
@@ -168,9 +167,12 @@ $(async function() {
         load_interest_list();
         load_morph_list();
     }
-    else {
+    else if (windowLoc.indexOf("gear") > -1) {
         load_category_gear();
         load_gear_types_nav(data);
+    }
+    else {
+        load_stats_nav();
     }
     
 })

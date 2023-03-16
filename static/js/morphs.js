@@ -1,3 +1,19 @@
+async function load_morphs_nav(){
+    let response = await axios.get(`https://ep2-data-api.herokuapp.com/morphs/types`)
+    stats = response.data;
+    let leftNav = document.getElementById("left-nav");
+    for (let i = 0; i < Object.keys(stats).length; i++){
+        let name = stats[i].name
+        let btn = document.createElement("a");
+        leftNav.append(btn);
+        btn.setAttribute("class", "btn my-1 px-3 btn-outline-info");
+        btn.setAttribute("id", name);
+        btn.setAttribute("href", `/morphs/types/${i}`);
+        let gearTypeBtn = document.getElementById(name);
+        gearTypeBtn.innerText = name;
+    }
+}
+
 async function load_morph_types(){
     let response = await axios.get(`https://ep2-data-api.herokuapp.com/${window.location.pathname}`);
     let morph = response.data;

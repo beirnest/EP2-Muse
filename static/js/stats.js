@@ -15,13 +15,20 @@ async function load_aptitudes(){
         td.setAttribute("id", `title_${aptitude[i].name}`)
         aptitudeTr.append(td)
         let aptitudeTd = document.getElementById(`title_${aptitude[i].name}`);
-        aptitudeTd.innerText = aptitude[i].name;
+
+        let a = document.createElement("a");
+        a.setAttribute("id", `link_${aptitude[i].name}`)
+        a.setAttribute("href", `/aptitudes/${i}`)
+        aptitudeTd.append(a)
+        let aptitudeA = document.getElementById(`link_${aptitude[i].name}`);
+        aptitudeA.innerText = aptitude[i].name;
 
         let newTd = document.createElement("td");
         newTd.setAttribute("id", `abreviation_${aptitude[i].name}`)
         aptitudeTr.append(newTd);
         let aptitudeShortName = document.getElementById(`abreviation_${aptitude[i].name}`);
         aptitudeShortName.innerHTML = aptitude[i].short_name;
+
 
         let newNewTd = document.createElement("td");
         newNewTd.setAttribute("id", `desc_${aptitude[i].name}`)
@@ -48,7 +55,13 @@ async function load_backgrounds(){
         td.setAttribute("id", `title_${background[i].name}`)
         backgroundTr.append(td)
         let backgroundTd = document.getElementById(`title_${background[i].name}`);
-        backgroundTd.innerText = background[i].name;
+
+        let a = document.createElement("a");
+        a.setAttribute("id", `link_${background[i].name}`)
+        a.setAttribute("href", `${window.location.pathname}/${i}`)
+        backgroundTd.append(a)
+        let backgroundA = document.getElementById(`link_${background[i].name}`);
+        backgroundA.innerText = background[i].name;
 
         let newTd = document.createElement("td");
         newTd.setAttribute("id", `desc_${background[i].name}`)
@@ -75,7 +88,13 @@ async function load_sleights(){
         td.setAttribute("id", `title_${sleights[i].name}`)
         sleightsTr.append(td)
         let sleightsTd = document.getElementById(`title_${sleights[i].name}`);
-        sleightsTd.innerText = sleights[i].name;
+        
+        let a = document.createElement("a");
+        a.setAttribute("id", `link_${sleights[i].name}`)
+        a.setAttribute("href", `/sleights/${i}`)
+        sleightsTd.append(a)
+        let sleightsA = document.getElementById(`link_${sleights[i].name}`);
+        sleightsA.innerText = sleights[i].name;
 
         let newTd = document.createElement("td");
         newTd.setAttribute("id", `lvl_${sleights[i].name}`)
@@ -114,7 +133,13 @@ async function load_traits(){
         td.setAttribute("id", `title_${traits[i].name}`)
         traitsTr.append(td)
         let traitsTd = document.getElementById(`title_${traits[i].name}`);
-        traitsTd.innerText = traits[i].name;
+
+        let a = document.createElement("a");
+        a.setAttribute("id", `link_${traits[i].name}`)
+        a.setAttribute("href", `/traits/${i}`)
+        traitsTd.append(a)
+        let traitsA = document.getElementById(`link_${traits[i].name}`);
+        traitsA.innerText = traits[i].name;
 
         let newTd = document.createElement("td");
         newTd.setAttribute("id", `cost_${traits[i].name}`)
@@ -153,7 +178,13 @@ async function load_pools(){
         td.setAttribute("id", `title_${pools[i].name}`)
         poolsTr.append(td)
         let poolsTd = document.getElementById(`title_${pools[i].name}`);
-        poolsTd.innerText = pools[i].name;
+
+        let a = document.createElement("a");
+        a.setAttribute("id", `link_${pools[i].name}`)
+        a.setAttribute("href", `/pools/${i}`)
+        poolsTd.append(a)
+        let poolsA = document.getElementById(`link_${pools[i].name}`);
+        poolsA.innerText = pools[i].name;
 
         let newTd = document.createElement("td");
         newTd.setAttribute("id", `checks_${pools[i].name}`)

@@ -179,7 +179,12 @@ def show_gear_from_category(category):
 def show_single_gear_item(category, id):
     """Show details about a specific piece of gear"""
 
-    r = requests.get(f'https://ep2-data-api.herokuapp.com/gear/categories/{category}/{id}') 
+    if category != "ranged weapons" and category !="melee weapons":
+        r = requests.get(f'https://ep2-data-api.herokuapp.com/gear/categories/{category}/{id}') 
+    elif category == "ranged weapons":
+        r = requests.get(f'https://ep2-data-api.herokuapp.com/gear/categories/ranged_weapons/{id}') 
+    elif category == "melee weapons":
+        r = requests.get(f'https://ep2-data-api.herokuapp.com/gear/categories/melee_weapons/{id}') 
     gear_item = r.json()
     
     return render_template('gear_item.html', user=g.user, category=category, gear_item=gear_item)
@@ -206,6 +211,15 @@ def show_morph_types():
     """Show list of types of morph"""
 
     return render_template('morphs.html', user=g.user, category="morphs")
+
+@app.route('/morphs/types/<int:id>')
+def show_single_morph_type(id):
+    """Show list of morphs of a certain type"""
+
+    r = requests.get(f'https://ep2-data-api.herokuapp.com/morphs/types/{id}') 
+    morph = r.json()
+
+    return render_template('morph_type.html', user=g.user, morph=morph)
 
 #---Characer Routes--
 
@@ -287,6 +301,7 @@ def load_my_character_list():
     
 def get_item_index(stat, data):
     """Find index for certain stat items from JSON response dictionary"""
+
     r = requests.get(f'https://ep2-data-api.herokuapp.com/{stat}') 
     stats = r.json()
     count = 0

@@ -84,9 +84,9 @@ async function load_gear_types_nav(response){
 }
 
 async function load_stats_nav(){
-    let response = await axios.get(`https://ep2-data-api.herokuapp.com/${window.location.pathname}`)
+    let pathArray = window.location.pathname.split('/');
+    let response = await axios.get(`https://ep2-data-api.herokuapp.com/${pathArray[1]}`)
     stats = response.data;
-    console.log(stats)
     let leftNav = document.getElementById("left-nav");
     for (let i = 0; i < Object.keys(stats).length; i++){
         let name = stats[i].name
@@ -94,8 +94,9 @@ async function load_stats_nav(){
         leftNav.append(btn);
         btn.setAttribute("class", "btn my-1 px-3 btn-outline-info");
         btn.setAttribute("id", name);
-        btn.setAttribute("href", `${window.location.pathname}/${i}`);
+        btn.setAttribute("href", `/${pathArray[1]}/${i}`);
         let gearTypeBtn = document.getElementById(name);
         gearTypeBtn.innerText = name;
     }
 }
+
