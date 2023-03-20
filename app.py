@@ -3,6 +3,7 @@ from forms import UserAddForm, LoginForm, AddCharacterForm, EditUserForm
 from flask_cors import CORS
 from models import db, connect_db, User, Character
 import requests
+import os
 
 
 CURR_USER_KEY = "curr_user"
@@ -13,7 +14,8 @@ CORS(app)
 if __name__ == '__app__':
     app.run()
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://mapigihozmrpjk:2536215d13676603ea2478e31c13217403ad613b2d9a48d72e29d4b76da4a91c@ec2-3-93-160-246.compute-1.amazonaws.com:5432/dfjcshlt7ckrtq'
+DATABASE_URL = os.environ['DATABASE_URL']
+conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ECHO'] = False
 app.config['SECRET_KEY'] = "leggolegoo"
