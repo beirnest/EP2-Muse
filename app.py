@@ -13,7 +13,7 @@ CORS(app)
 if __name__ == '__app__':
     app.run()
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'secret'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://mapigihozmrpjk:2536215d13676603ea2478e31c13217403ad613b2d9a48d72e29d4b76da4a91c@ec2-3-93-160-246.compute-1.amazonaws.com:5432/dfjcshlt7ckrtq'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ECHO'] = False
 app.config['SECRET_KEY'] = "leggolegoo"
@@ -257,7 +257,7 @@ def show_add_character():
     s = requests.get(f'https://ep2-data-api.herokuapp.com/skills') 
     skills = s.json()
     b = requests.get(f'https://ep2-data-api.herokuapp.com/backgrounds') 
-    backgrounds = b.json()
+    backgrounds = b.json
 
     if not g.user:
         flash("You must be logged in to add a character.", "danger")
@@ -284,7 +284,7 @@ def show_add_character():
         flash("Your character has been sucessfully created.")
         return redirect("/")
     else:
-        return render_template('/add_character.html', form=form, user=g.user, skills=skills, backgrounds=backgrounds)
+        return render_template('/add_character.html', form=form, user=g.user, skills=skills)
     
 @app.route('/characters/my')
 def load_my_character_list():

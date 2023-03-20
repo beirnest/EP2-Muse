@@ -11,6 +11,8 @@ let selectedBgOption;
 let selectedIntOption;
 let selectedCarOption;
 
+let tempStr = "";
+
 $('btn').click(function() { window.location=`/gear/category/${self.id}`; });
 
 async function load_bg_list() {
@@ -52,7 +54,7 @@ $("#aptitude_template").change(function(evt) {
     }
   }).change();
 
-  $("#background").change(function(evt) {
+$("#background").change(function(evt) {
     
     let str = evt.target.value;
     let selectNum = 0;
@@ -72,7 +74,7 @@ $("#aptitude_template").change(function(evt) {
                     if (backgrounds[i].skills[skill].name == "know"){
                         for (let option in backgrounds[i].skills[skill].options){
                             $(`#${backgrounds[i].skills[skill].options[option].toLowerCase().replace(/ /g,'')}`).remove();
-                            $(`#bg-know-row:last-child`).empty();
+                            $(`#bg-know-row`).empty();
                         } 
                     }
                     else {
@@ -94,7 +96,6 @@ $("#aptitude_template").change(function(evt) {
                     if (backgrounds[i].skills[skill].name == "know"){
                         if (backgrounds[i].skills[skill].options.length == 1){
                             newDiv = document.createElement("div");
-                            console.log(backgrounds[i].skills[skill].options[0])
                             newDiv.setAttribute("id", `${backgrounds[i].skills[skill].options[0].toLowerCase().replace(/ /g,'')}`);
                             newDiv.setAttribute("class", 'col-6 col-lg-3 py-1 me-1 border-bottom border-info');
                             $(`#${backgrounds[i].skills[skill].options[0].toLowerCase().replace(/ /g,'')}`).html(`${backgrounds[i].skills[skill].options[0]}`)
@@ -133,7 +134,7 @@ $("#aptitude_template").change(function(evt) {
     }
   })
 
-  $("#interests").change(function(evt) {
+$("#interests").change(function(evt) {
     
     let str = evt.target.value;
       
@@ -151,7 +152,7 @@ $("#aptitude_template").change(function(evt) {
                     for (let skill in interests[i].skills){
                         if (interests[i].skills[skill].name.toLowerCase() == "know"){
                             $(`#${interests[i].skills[skill].options[0].toLowerCase().replace(/ /g,'')}`).remove();
-                            $(`#int-know-row:last-child`).empty();
+                            $(`#int-know-row`).empty();
                         }
                         else{
                             let value = parseInt($(`#${interests[i].skills[skill].name.toLowerCase()}_value`).text());
@@ -183,13 +184,11 @@ $("#aptitude_template").change(function(evt) {
                             newH4.setAttribute("class",`h4 text-end`);
                             $(`#${interests[i].skills[skill].options[0].toLowerCase().replace(/ /g,'')}`).append(newH4);
                             $(`#${interests[i].skills[skill].options[0].toLowerCase().replace(/ /g,'')}_value`).text(`${interests[i].skills[skill].rating}`)
-                            console.log('test2')
                         }
                         else if($(`#${interests[i].skills[skill].options[0].toLowerCase().replace(/ /g,'')}`).length > 0) {
                             let value = parseInt($(`#${interests[i].skills[skill].options[0].toLowerCase().replace(/ /g,'')}_value`).text());
                             value += interests[i].skills[skill].rating;
                             $(`#${interests[i].skills[skill].options[0].toLowerCase().replace(/ /g,'')}_value`).html(`${value}`);
-                            console.log('test3')
                         }
                     }
                     else{
@@ -203,7 +202,7 @@ $("#aptitude_template").change(function(evt) {
     }
   })
 
-  $("#career").change(function(evt) {
+$("#career").change(function(evt) {
     
     let str = evt.target.value;
     let selectNum = 0;
@@ -223,7 +222,7 @@ $("#aptitude_template").change(function(evt) {
                     if (careers[i].skills[skill].name == "know"){
                         for (let option in careers[i].skills[skill].options){
                             $(`#${careers[i].skills[skill].options[option].toLowerCase().replace(/ /g,'')}`).remove();
-                            $(`#car-know-row:last-child`).empty();
+                            $(`#car-know-row`).empty();
                         } 
                     }
                     else {
@@ -245,13 +244,12 @@ $("#aptitude_template").change(function(evt) {
                     if (careers[i].skills[skill].name == "know"){
                         if (careers[i].skills[skill].options.length == 1){
                             newDiv = document.createElement("div");
-                            console.log(careers[i].skills[skill].options[0])
                             newDiv.setAttribute("id", `${careers[i].skills[skill].options[0].toLowerCase().replace(/ /g,'')}`);
                             newDiv.setAttribute("class", 'col-6 col-lg-3 py-1 me-1 border-bottom border-info');
                             $(`#${careers[i].skills[skill].options[0].toLowerCase().replace(/ /g,'')}`).html(`${careers[i].skills[skill].options[0]}`)
                             $("#car-know-row").append(newDiv);
                             const h4 = document.createElement('h4')
-                            h4.setAttribute("id", `${careers[i].skills[skill].options[option].toLowerCase().replace(/ /g,'')}_value`)
+                            h4.setAttribute("id", `${careers[i].skills[skill].options[0].toLowerCase().replace(/ /g,'')}_value`)
                             h4.setAttribute("class", `h4 text-end align-bottom`)
                             $(`#${careers[i].skills[skill].options[0].toLowerCase().replace(/ /g,'')}`).append(h4)
                             $(`#${careers[i].skills[skill].options[0].toLowerCase().replace(/ /g,'')}_value`).html(`${careers[i].skills[skill].rating}`)
@@ -268,9 +266,9 @@ $("#aptitude_template").change(function(evt) {
                                 optionNum += 1;
                                 let newOption = document.createElement("option")
                                 newOption.setAttribute("value", `${careers[i].skills[skill].options[option]}`)
-                                newOption.setAttribute("id", `${selectNum}-${optionNum}_option`)
+                                newOption.setAttribute("id", `car_${selectNum}-${optionNum}_option`)
                                 $(`#car-know-select-${selectNum}`).append(newOption);
-                                $(`#${selectNum}-${optionNum}_option`).text(`${careers[i].skills[skill].options[option]}`) 
+                                $(`#car_${selectNum}-${optionNum}_option`).text(`${careers[i].skills[skill].options[option]}`) 
                         }
                     }}
                     else{
@@ -283,6 +281,36 @@ $("#aptitude_template").change(function(evt) {
         }
     }
   })
+
+$("#bg-know-row").change(function(evt) {
+    
+    let str = evt.target.value;
+    if (str != tempStr) {
+    if (str != "--- Select One ---" ){
+        get_bg_know_neg(tempStr);
+        get_bg_know(str);
+    }
+
+    function get_bg_know_neg(string){
+        console.log(string);
+        $(`${tempStr.toLowerCase().replace(/ /g,'')}`).remove();
+        tempStr = str;
+      }
+    }
+
+    function get_bg_know(str){
+        const newDiv = document.createElement("div");
+        newDiv.setAttribute("id", `${str.toLowerCase().replace(/ /g,'')}`);
+        newDiv.setAttribute("class", `col-6 col-lg-3 py-1 me-1 border-bottom border-info`)
+        $('#bg-know-row').append(newDiv)
+        $(`#${str.toLowerCase().replace(/ /g,'')}`).html(`${str}`)
+        const h4 = document.createElement('h4')
+        h4.setAttribute("id", `bg_skill_${str.toLowerCase().replace(/ /g,'')}_value`)
+        h4.setAttribute("class", `h4 text-end align-bottom`)
+        $(`#${str.toLowerCase().replace(/ /g,'')}`).append(h4)
+        $(`#bg_skill_${str.toLowerCase().replace(/ /g,'')}_value`).html(`0`)
+    }
+})
 
 
 async function load_career_list() {
