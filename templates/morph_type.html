@@ -11,8 +11,16 @@
                 <div class="col lg-8 p-3 me-5 mt-1 text-body bg-body-secondary rounded-end border border-info">
                     <h2><p id="name" class="text-info my-2"></p>{{ morph.name }}</h2>
                     <div class="col p-3 table-responsive">
-                        <p><strong>Biological:</strong> {{ morph.biological}}</p>
+                        <p><strong>Biological:</strong> {{ morph.biological }}</p>
                         <h3>Description</h3>{{ morph.description|safe }}
+                        <h3>Morphs</h3>
+                        <ul>
+                            {% for single_morph in morph_type %}
+                                {% if single_morph.type == morph.name %}
+                                <li>{{ single_morph.name }}</li>
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
                     </div>
                 </div>
                 <div class="col-lg-3 p-3 mt-1 text-body bg-body-secondary rounded border border-info">

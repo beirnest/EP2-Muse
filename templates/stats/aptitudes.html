@@ -8,20 +8,22 @@
                         <div id ="left-nav" class="btn-group-vertical">    
                         </div>
                 </div>
-                <div class="col p-3 me-5 mt-1 text-body bg-body-secondary rounded-end border border-info">
-                    <h2><p id="name" class="text-info my-2"></p>{{ category|upper }}</h2>
-                    <div class="col p-3">
-                      <table class="table table-dark table-bordered border-info table-striped table-hover">
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Abbrevation</th>
-                                <th>Description</th>
-                            </tr>
-                        </thead>
-                        <tbody id="aptitude-list">
-                        </tbody>
-                      </table>
+                <div class="col">
+                    <div class="px-3 mt-1 text-body bg-body-secondary rounded border border-info d-block h-auto">
+                        <h2><p id="name" class="text-info my-2"></p>{{ category|upper }}</h2>
+                        <div class="col p-3">
+                        <table class="table table-dark table-bordered border-info table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Abbrevation</th>
+                                    <th>Description</th>
+                                </tr>
+                            </thead>
+                            <tbody id="aptitude-list">
+                            </tbody>
+                        </table>
+                        </div>
                     </div>
                 </div>
             </div>

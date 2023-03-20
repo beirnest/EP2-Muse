@@ -8,33 +8,57 @@
                         <div id ="left-nav" class="btn-group-vertical">    
                         </div>
                 </div>
-                <div class="col p-3 me-lg-5 mt-1 text-body bg-body-secondary rounded-end border border-info">
-                    <h2><p id="name" class="text-info my-2"></p>{{ stat.name|upper }} {% if stat.short_name %}({{ stat.short_name|upper }}){% endif %}</h2>
-                    <div class="col p-3">
-                      <p>{{ stat.description|safe }}</p>
-                      {% if stat.skills %}
-                        <h4>Skills</h4>
-                        {% for skill in stat.skills %}
-                            <p><strong>{{ skill.name|capitalize }}</strong>: {{ skill.rating }}</p>
-                            <ul>
-                                {% for option in skill.options %}
-                                    <li>{{ option }}</li>
+                <div class="col">
+                    <div class="p-3 me-lg-5 mt-1 text-body bg-body-secondary rounded-end border border-info d-block h-auto">
+                        <h2><p id="name" class="text-info my-2"></p>{{ stat.name|upper }} {% if stat.short_name %}({{ stat.short_name|upper }}){% endif %}</h2>
+                        <div class="col p-3">
+                          <p>{{ stat.description|safe }}</p>
+                          {% if stat.skills %}
+                            <h4>Skills</h4>
+                            {% for skill in stat.skills %}
+                                <p><strong>{{ skill.name|capitalize }}</strong>: {{ skill.rating }}</p>
+                                <ul>
+                                    {% for option in skill.options %}
+                                        <li>{{ option }}</li>
+                                    {% endfor %}
+                                </ul>
+                            {% endfor %}
+                           {% endif %}
+                           {% if stat.level %}
+                           <p><strong>Level</strong>: {{ stat.level }}</p>
+                           <p><strong>Action</strong>: {{ stat.action }}</p>
+                           <p><strong>Duration</strong>: {{ stat.duration }}</p>
+                           {% endif %}
+                           {% if stat.checks %}
+                           <h4>Checks</h4>
+                           <ul>
+                                {% for check in stat.checks %}
+                                <li>{{ check }}</li>
                                 {% endfor %}
-                            </ul>
-                        {% endfor %}
-                       {% endif %}
-                    </div>
+                           </ul>
+                           {% endif %}
+                           {% if stat.effects %}
+                           <h4>Effects</h4>
+                           <ul>
+                                {% for effect in stat.effects %}
+                                <li>{{ effect }}</li>
+                                {% endfor %}
+                           </ul>
+                           {% endif %}
+                        </div>
                 </div>
-                <div class="col-lg-3 p-3 mt-1 text-body bg-body-secondary rounded border border-info">
-                    <h2><p class="text-info my-2">Source</p></h2>
-                    <div class="col p-3">
-                    {% if stat.resource == "Eclipse Phase Second Edition" %}
-                        <img src="/static/images/EP2-cover.webp" class="img-fluid">
-                    {% endif %}
-                    {% if stat.resource == "Eclipse Phase: Multiplicity and Synthesis" %}
-                        <img src="/static/images/EPMAS.jpg" class="img-fluid">
-                    {% endif %}
-
+                </div>
+                <div class="col-lg-3">
+                    <div class="px-3 mt-1 text-body bg-body-secondary rounded border border-info d-block h-auto">
+                        <h2><p class="text-info my-2">Source</p></h2>
+                        <div class="col p-3">
+                        {% if stat.resource == "Eclipse Phase Second Edition" %}
+                            <img src="/static/images/EP2-cover.webp" class="img-fluid">
+                        {% endif %}
+                        {% if stat.resource == "Eclipse Phase: Multiplicity and Synthesis" %}
+                            <img src="/static/images/EPMAS.jpg" class="img-fluid">
+                        {% endif %}
+                        </div>
                     </div>
                 </div>
             </div>

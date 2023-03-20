@@ -3,7 +3,6 @@ from forms import UserAddForm, LoginForm, AddCharacterForm, EditUserForm
 from flask_cors import CORS
 from models import db, connect_db, User, Character
 import requests
-import os
 
 
 CURR_USER_KEY = "curr_user"
@@ -218,8 +217,11 @@ def show_single_morph_type(id):
 
     r = requests.get(f'https://ep2-data-api.herokuapp.com/morphs/types/{id}') 
     morph = r.json()
+    
+    r2 = requests.get(f'https://ep2-data-api.herokuapp.com/morphs') 
+    morph_type = r2.json()
 
-    return render_template('morph_type.html', user=g.user, morph=morph)
+    return render_template('morph_type.html', user=g.user, morph=morph, morph_type=morph_type)
 
 #---Characer Routes--
 
@@ -252,6 +254,11 @@ def show_add_character():
 
     form = AddCharacterForm()
 
+    s = requests.get(f'https://ep2-data-api.herokuapp.com/skills') 
+    skills = s.json()
+    b = requests.get(f'https://ep2-data-api.herokuapp.com/backgrounds') 
+    backgrounds = b.json()
+
     if not g.user:
         flash("You must be logged in to add a character.", "danger")
         return redirect("/")
@@ -277,7 +284,7 @@ def show_add_character():
         flash("Your character has been sucessfully created.")
         return redirect("/")
     else:
-        return render_template('/add_character.html', form=form, user=g.user)
+        return render_template('/add_character.html', form=form, user=g.user, skills=skills, backgrounds=backgrounds)
     
 @app.route('/characters/my')
 def load_my_character_list():

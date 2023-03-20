@@ -8,19 +8,21 @@
                         <div id ="left-nav" class="btn-group-vertical">    
                         </div>
                 </div>
-                <div class="col lg-8 p-3 me-5 mt-1 text-body bg-body-secondary rounded-end border border-info">
-                    <h2><p id="name" class="text-info my-2"></p>{{ gear_item.name }}</h2>
-                    <div class="col p-3 table-responsive">
-                        <p><strong>Category:</strong> {{ gear_item.category }}</p>
-                        <p><strong>Subcategory:</strong> {{ gear_item.subcategory }}</p>
-                        <p><strong>Complexity/GP:</strong> {{ gear_item['complexity/gp'] }}</p>
-                        {% if gear_item.summary != undefined %}
-                            <p><strong>Summary:</strong> {{ gear_item.summary }}</p>
-                        {% endif %}
-                        <h3>Description</h3>{{ gear_item.description|safe }}
+                <div class="col">
+                    <div class="p-3 mt-1 text-body bg-body-secondary rounded border border-info d-block h-auto">
+                        <h2><p id="name" class="text-info my-2"></p>{{ gear_item.name }}</h2>
+                        <div class="col p-3 table-responsive">
+                            <p><strong>Category:</strong> {{ gear_item.category }}</p>
+                            <p><strong>Subcategory:</strong> {{ gear_item.subcategory }}</p>
+                            <p><strong>Complexity/GP:</strong> {{ gear_item['complexity/gp'] }}</p>
+                            {% if gear_item.summary != undefined %}
+                                <p><strong>Summary:</strong> {{ gear_item.summary }}</p>
+                            {% endif %}
+                            <h3>Description</h3>{{ gear_item.description|safe }}
+                        </div>
                     </div>
                 </div>
-                <div class="col-lg-3 p-3 mt-1 text-body bg-body-secondary rounded border border-info">
+                <div class="col-lg-3 p-3 mt-1 text-body bg-body-secondary rounded border border-info d-block h-auto">
                     <h2><p class="text-info my-2">Source</p></h2>
                     <div class="col p-3">
                       {% if gear_item.resource == "Eclipse Phase Second Edition" %}

@@ -158,6 +158,18 @@ async function load_traits(){
         traitsTr.append(new2Td);
         let traitsSum = document.getElementById(`sum_${traits[i].name}`);
         traitsSum.innerHTML = traits[i].summary;
+
+        let new3Td = document.createElement("td");
+        new3Td.setAttribute("id", `ego_${traits[i].name}`)
+        traitsTr.append(new3Td);
+        let traitsEgo = document.getElementById(`ego_${traits[i].name}`);
+        traitsEgo.innerHTML = traits[i].ego;
+
+        let new4Td = document.createElement("td");
+        new4Td.setAttribute("id", `morph_${traits[i].name}`)
+        traitsTr.append(new4Td);
+        let traitsMorph = document.getElementById(`morph_${traits[i].name}`);
+        traitsMorph.innerHTML = traits[i].morph;
     }
 }
 
