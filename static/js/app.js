@@ -287,28 +287,64 @@ $("#bg-know-row").change(function(evt) {
     let str = evt.target.value;
     if (str != tempStr) {
     if (str != "--- Select One ---" ){
-        get_bg_know_neg(tempStr);
+        get_bg_know_neg();
         get_bg_know(str);
     }
 
-    function get_bg_know_neg(string){
-        console.log(string);
-        $(`${tempStr.toLowerCase().replace(/ /g,'')}`).remove();
+    function get_bg_know_neg(){
+        if ($(`#${evt.target.id}_skill`).length > 0){
+            $(`#${evt.target.id}_skill`).remove();
+        }
         tempStr = str;
       }
     }
 
     function get_bg_know(str){
-        const newDiv = document.createElement("div");
-        newDiv.setAttribute("id", `${str.toLowerCase().replace(/ /g,'')}`);
-        newDiv.setAttribute("class", `col-6 col-lg-3 py-1 me-1 border-bottom border-info`)
-        $('#bg-know-row').append(newDiv)
-        $(`#${str.toLowerCase().replace(/ /g,'')}`).html(`${str}`)
-        const h4 = document.createElement('h4')
-        h4.setAttribute("id", `bg_skill_${str.toLowerCase().replace(/ /g,'')}_value`)
-        h4.setAttribute("class", `h4 text-end align-bottom`)
-        $(`#${str.toLowerCase().replace(/ /g,'')}`).append(h4)
-        $(`#bg_skill_${str.toLowerCase().replace(/ /g,'')}_value`).html(`0`)
+        if ($(`#${evt.target.id}_skill`).length == 0) {
+            const newDiv = document.createElement("div");
+            newDiv.setAttribute("id", `${evt.target.id}_skill`);
+            newDiv.setAttribute("class", `col-6 col-lg-3 py-1 me-1 border-bottom border-info`)
+            $('#bg-know-row').append(newDiv)
+            $(`#${evt.target.id}_skill`).html(`${str}`)
+            const h4 = document.createElement('h4')
+            h4.setAttribute("id", `bg_skill_${str.toLowerCase().replace(/ /g,'')}_value`)
+            h4.setAttribute("class", `h4 text-end align-bottom`)
+            $(`#${evt.target.id}_skill`).append(h4)
+            $(`#bg_skill_${str.toLowerCase().replace(/ /g,'')}_value`).html(`0`)
+        }
+    }
+})
+
+$("#car-know-row").change(function(evt) {
+    
+    let str = evt.target.value;
+    if (str != tempStr) {
+    if (str != "--- Select One ---" ){
+        get_car_know_neg();
+        get_car_know(str);
+    }
+
+    function get_car_know_neg(){
+        if ($(`#${evt.target.id}_skill`).length > 0){
+            $(`#${evt.target.id}_skill`).remove();
+        }
+        tempStr = str;
+      }
+    }
+
+    function get_car_know(str){
+        if ($(`#${evt.target.id}_skill`).length == 0) {
+            const newDiv = document.createElement("div");
+            newDiv.setAttribute("id", `${evt.target.id}_skill`);
+            newDiv.setAttribute("class", `col-6 col-lg-3 py-1 me-1 border-bottom border-info`)
+            $('#car-know-row').append(newDiv)
+            $(`#${evt.target.id}_skill`).html(`${str}`)
+            const h4 = document.createElement('h4')
+            h4.setAttribute("id", `car_skill_${str.toLowerCase().replace(/ /g,'')}_value`)
+            h4.setAttribute("class", `h4 text-end align-bottom`)
+            $(`#${evt.target.id}_skill`).append(h4)
+            $(`#car_skill_${str.toLowerCase().replace(/ /g,'')}_value`).html(`0`)
+        }
     }
 })
 
