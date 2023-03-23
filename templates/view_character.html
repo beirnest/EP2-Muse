@@ -1,22 +1,101 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <div class="container-fluid bg-body-primary mt-3">
+    <div class = container-fluid bg-body-primary mt-3>
         <div data-bs-theme="dark"class="row p-1 justify-content-evenly">
-            <div class="row">
-                <div class="col p-3 mt-1 text-body bg-body-secondary rounded border border-info">
-                    <h2><p id="name" class="text-info my-2"></p>{{ character.name }}</h2>
-                    <div class="col p-3 table-responsive">
-                      <p>Background: {{ background.name }}</p>
-                      <p>Career: {{ career.name }}</p>
-                      <p>Interests: {{ interests.name }}</p>
-                      <p>Faction: {{ faction.name }}</p>
-                      <p>Aptitude Template: {{ aptitude.name }}</p>
-                      <p>Languages: {{ character.languages }}</p>
-                      <p>Morph: {{ morph.name }}</p>
+            <div class="row justify-content-center">
+                    <div>
+                        {% with messages = get_flashed_messages() %}
+                        {% if messages %}
+                            {% for message in messages %}
+                                {{ message }}
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
                     </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col p-3 mx-5 mt-1 text-body bg-body-secondary rounded border border-info">
+                        <h4>Character Info</h4>
+                        <div class="row p-3">
+                            <div class="col" id="char-name"><strong>Name:</strong> {{ character.name }}</div>
+                            <div class="col" id="char-template"><strong>Aptitude Template:</strong> {{ aptitude.name }}</div>
+                        </div>
+                        <div class="row p-3">
+                            <div class="col" id="char-label" ><strong>Background:</strong> {{ background.name }}</div>
+                            <div class="col" id="char-career"><strong>Career:</strong> {{ career.name }}</div>
+                        </div>
+                        <div class="row p-3">
+                            <div class="col" id="char-interests"><strong>Interests:</strong> {{ interests.name }}</div>
+                            <div class="col" id="char-faction"><strong>Faction:</strong> {{ faction.name }}</div>
+                        </div>
+                        <div class="row p-3">
+                            <div class="col" id="char-lanugages"><strong>Lanugages:</strong> {{ character.languages }}</div>
+                            <div class="col" id="char-morph"><strong>Morph:</strong> {{ morph.name }}</div>
+                        </div>
+                        <div class="my-3 g-body-secondary rounded-end border border-info"></div>
+                        <div class="row p-3">
+                            <div class="col-lg-6">
+                                <h4>Aptitudes & Derived Stats</h4>
+                                <div class="row">
+                                    <div class="col-lg-2 p-lg-3 border border-info text-center" id="cognition"><strong>COG</strong><div><h4>{{ aptitude.aptitudes.cognition }}</h4><div class="my-3 g-body-secondary rounded-end border border-info"></div> <h4>{{ aptitude.aptitudes.cognition * 3 }}</h4></div></div>
+                                    <div class="col-lg-2 p-lg-3 border border-info text-center" id="intuition"><strong>INT</strong><div><h4>{{ aptitude.aptitudes.intuition }}</h4><div class="my-3 g-body-secondary rounded-end border border-info"></div> <h4>{{ aptitude.aptitudes.intuition * 3 }}</h4></div></div>
+                                    <div class="col-lg-2 p-lg-3 border border-info text-center" id="reflexes"><strong>REF</strong><div><h4>{{ aptitude.aptitudes.reflexes }}</h4><div class="my-3 g-body-secondary rounded-end border border-info"></div> <h4>{{ aptitude.aptitudes.reflexes * 3 }}</h4></div></div>
+                                    <div class="col-lg-2 p-lg-3 border border-info text-center" id="savvy"><strong>SAV</strong><div><h4>{{ aptitude.aptitudes.savvy }}</h4><div class="my-3 g-body-secondary rounded-end border border-info"></div> <h4>{{ aptitude.aptitudes.savvy * 3 }}</h4></div></div>
+                                    <div class="col-lg-2 p-lg-3 border border-info text-center" id="somatics"><strong>SOM</strong><div><h4>{{ aptitude.aptitudes.somatics }}</h4><div class="my-3 g-body-secondary rounded-end border border-info"></div> <h4>{{ aptitude.aptitudes.somatics * 3 }}</h4></div></div>
+                                    <div class="col-lg-2 p-lg-3 border border-info text-center" id="willpower"><strong>WIL</strong><div><h4>{{ aptitude.aptitudes.willpower }}</h4><div class="my-3 g-body-secondary rounded-end border border-info"></div> <h4>{{ aptitude.aptitudes.willpower * 3 }}</h4></div></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col border border-info border-top-0 text-center" id="initiative"><div class="row"><div class="col text-center">Initiative</div></div><div><h4>{{ ((aptitude.aptitudes.reflexes + aptitude.aptitudes.intuition)/5)|int }}</h4></div></div>
+                                    <div class="col border border-info border-top-0 text-center" id="lucidity"><div class="row"><div class="col text-center">Lucidity</div></div><div><h4>{{ (aptitude.aptitudes.willpower * 2)|int }}</h4></div></div>
+                                    <div class="col border border-info border-top-0 text-center" id="trauma_threshold"><div class="row"><div class="col text-center">Trauma Threshold</div></div><div><h4>{{ ((aptitude.aptitudes.willpower * 2)/5)|int }}</h4></div></div>
+                                    <div class="col border border-info border-top-0 text-center" id="insanity_rating"><div class="row"><div class="col text-center">Insanity Rating</div></div><div><h4>{{ ((aptitude.aptitudes.willpower * 2)*2)|int }}</h4></div></div>
+                                </div>
+                                <div class="row">
+                                    <h4 class="h4 mt-lg-3">Know Skills</h4>
+                                    <div id="bg-know-row"></div>
+                                    <div id="int-know-row"></div>
+                                    <div id="car-know-row"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="row m-lg-1">
+                                    <h4>Active Skills</h4>
+                                    {% for skill in skills %}
+                                        {% if skill.know == False %}
+                                        {% set value = [] %}
+                                            <div class="col-6 col-lg-3 py-1 me-1 border-bottom border-info" id="{{ skill.name|lower }}"><strong>{{ skill.name }}</strong><h4 class="h4 text-end" id="{{ skill.name|lower }}_value">
+                                                {% for bg_skill in background.skills %}
+                                                    {% if bg_skill.name|lower == skill.name|lower %}
+                                                        {% set bg_value = bg_skill.rating %}
+                                                        {{ value.append(bg_value) or "" }}
+                                                    {% endif %}
+                                                {% endfor %}
+                                                {% for int_skill in interests.skills %}
+                                                    {% if int_skill.name|lower == skill.name|lower %}
+                                                        {% set int_value = int_skill.rating %}
+                                                        {{ value.append(int_value) or "" }}
+                                                    {% endif %}
+                                                {% endfor %}
+                                                {% for car_skill in career.skills  %}
+                                                    {% if car_skill.name|lower == skill.name|lower %}
+                                                        {% set car_value = car_skill.rating %}
+                                                        {{ value.append(car_value) or "" }}
+                                                    {% endif %}
+                                                {% endfor %}
+                                                {% if value %}
+                                                {{ (value if value)|sum or ""}}
+                                                {% else %}
+                                                0
+                                                {% endif %}
+                                            </h4></div>
+                                        {% endif %}        
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
                 </div>
             </div>
         </div>
     </div>
-    {% endblock %}
+{% endblock %}

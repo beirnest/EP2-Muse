@@ -45,10 +45,10 @@ $("#aptitude_template").change(function(evt) {
                 for (let aptitude in templates[i].aptitudes){
                     $(`#${aptitude}`).html(`<div class="row"><div class="col text-center"><strong>${aptitude.slice(0,3).toUpperCase()}</strong></div></div><div><h4>${templates[i].aptitudes[aptitude]}</h4> <div class="my-3 g-body-secondary rounded-end border border-info"></div> <h4>${templates[i].aptitudes[aptitude] * 3}</h4></div>`)
                 }
-                $(`#initiative`).html(`<div class="row"><div class="col text-center">Initiative</div></div><div><h4>${(templates[i].aptitudes.reflexes + templates[i].aptitudes.intuition)/5}</h4>`)
-                $(`#lucidity`).html(`<div class="row"><div class="col text-center">Lucidity</div></div><div><h4>${templates[i].aptitudes.willpower * 2}</h4>`)
-                $(`#trauma_threshold`).html(`<div class="row"><div class="col text-center">Trauma Threshold</div></div><div><h4>${(templates[i].aptitudes.willpower * 2)/5}</h4>`)
-                $(`#insanity_rating`).html(`<div class="row"><div class="col text-center">Insanity Rating</div></div><div><h4>${(templates[i].aptitudes.willpower * 2)*2}</h4>`)
+                $(`#initiative`).html(`<div class="row"><div class="col text-center">Initiative</div></div><div><h4>${(templates[i].aptitudes.reflexes + templates[i].aptitudes.intuition)/5}</h4></div>`)
+                $(`#lucidity`).html(`<div class="row"><div class="col text-center">Lucidity</div></div><div><h4>${templates[i].aptitudes.willpower * 2}</h4></div>`)
+                $(`#trauma_threshold`).html(`<div class="row"><div class="col text-center">Trauma Threshold</div></div><div><h4>${(templates[i].aptitudes.willpower * 2)/5}</h4></div>`)
+                $(`#insanity_rating`).html(`<div class="row"><div class="col text-center">Insanity Rating</div></div><div><h4>${(templates[i].aptitudes.willpower * 2)*2}</h4></div>`)
             }
         }
     }
@@ -111,6 +111,7 @@ $("#background").change(function(evt) {
                             let select = document.createElement("select")
                             select.setAttribute("id", `bg-know-select-${selectNum}`)
                             select.setAttribute("class", `select m-2`)
+                            select.setAttribute("name", `bg-know-select-${selectNum}`)
                             $("#bg-know-row").append(select);
                             select.innerHTML = '<option value="--- Select One ---">--- Select One ---</option>'
                             let optionNum = 0;
@@ -310,7 +311,13 @@ $("#bg-know-row").change(function(evt) {
             h4.setAttribute("id", `bg_skill_${str.toLowerCase().replace(/ /g,'')}_value`)
             h4.setAttribute("class", `h4 text-end align-bottom`)
             $(`#${evt.target.id}_skill`).append(h4)
-            $(`#bg_skill_${str.toLowerCase().replace(/ /g,'')}_value`).html(`0`)
+            if( evt.target.id == "bg-know-select-1"){
+                $(`#bg_skill_${str.toLowerCase().replace(/ /g,'')}_value`).html(`60`)
+            }
+            else {
+                $(`#bg_skill_${str.toLowerCase().replace(/ /g,'')}_value`).html(`30`)
+            }
+            
         }
     }
 })
@@ -343,7 +350,12 @@ $("#car-know-row").change(function(evt) {
             h4.setAttribute("id", `car_skill_${str.toLowerCase().replace(/ /g,'')}_value`)
             h4.setAttribute("class", `h4 text-end align-bottom`)
             $(`#${evt.target.id}_skill`).append(h4)
-            $(`#car_skill_${str.toLowerCase().replace(/ /g,'')}_value`).html(`0`)
+            if( evt.target.id == "car-know-select-1"){
+                $(`#car_skill_${str.toLowerCase().replace(/ /g,'')}_value`).html(`60`)
+            }
+            else {
+                $(`#car_skill_${str.toLowerCase().replace(/ /g,'')}_value`).html(`30`)
+            }
         }
     }
 })

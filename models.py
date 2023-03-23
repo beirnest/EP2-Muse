@@ -201,7 +201,7 @@ class Char_Skill(db.Model):
                      nullable=False) 
     skill = db.Column(db.Integer,
                      nullable=False) 
-    skill = db.Column(db.Integer,
+    amt = db.Column(db.Integer,
                      nullable=False) 
     
 class Char_Sleight(db.Model):

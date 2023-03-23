@@ -1,7 +1,7 @@
-from flask import Flask, render_template, flash, redirect, session, g
+from flask import Flask, render_template, flash, redirect, session, g, request
 from forms import UserAddForm, LoginForm, AddCharacterForm, EditUserForm
 from flask_cors import CORS
-from models import db, connect_db, User, Character
+from models import db, connect_db, User, Character, Char_Skill
 import requests
 
 
@@ -14,7 +14,7 @@ if __name__ == '__app__':
     app.run()
 
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'secret'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://lttwzvcaneifna:9503d3e2037a1ba88e82dab4a9d24952d349dc148d1bc4adb2c32feebf4571f8@ec2-44-213-151-75.compute-1.amazonaws.com:5432/d7j6pbdutp2k58'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ECHO'] = False
 app.config['SECRET_KEY'] = "leggolegoo"
@@ -247,7 +247,9 @@ def show_character(char_id):
         aptitude = a.json()
         m = requests.get(f'https://ep2-data-api.herokuapp.com/morphs/{character.morph}') 
         morph = m.json()
-        return render_template('/view_character.html', user=g.user, character=character, background=background, career=career, interests=interests, faction=faction, aptitude=aptitude, morph=morph)
+        s = requests.get(f'https://ep2-data-api.herokuapp.com/skills') 
+        skills = s.json()
+        return render_template('/view_character.html', user=g.user, character=character, background=background, career=career, interests=interests, faction=faction, aptitude=aptitude, morph=morph, skills=skills, value=0)
 
 @app.route('/characters/add', methods=["GET", "POST"])
 def show_add_character():
@@ -280,7 +282,25 @@ def show_add_character():
         morphs = form.morph.data
         morph = get_item_index("morphs", morphs)
         character = Character(user_id=user, name=name, background=background, career=career, faction=faction, aptitude=aptitude, languages=languages, interests=interest, morph=morph)
+        bg_skill_1 = request.form.get('bg-know-select-1')
+        print(bg_skill_1)
+        bg_skill_2 = request.form.get('bg-know-select-2')
+        bg_skill_1_index = get_item_index("skills", bg_skill_1)
+        print(bg_skill_1_index)
+        bg_skill_1_entry = Char_Skill(user_id=user, skill=bg_skill_1_index, amt=60)
+        bg_skill_2_index = get_item_index("skills", bg_skill_2)
+        bg_skill_2_entry = Char_Skill(user_id=user, skill=bg_skill_2_index, amt=30)
+        car_skill_1 = request.form.get('car-know-select-1')
+        car_skill_2 = request.form.get('car-know-select-2')
+        car_skill_1_index = get_item_index("skills", car_skill_1)
+        car_skill_1_entry = Char_Skill(user_id=user, skill=car_skill_1_index, amt=60)
+        car_skill_2_index = get_item_index("skills", car_skill_2)
+        car_skill_2_entry = Char_Skill(user_id=user, skill=car_skill_2_index, amt=30)
         db.session.add(character)
+        db.session.add(bg_skill_1_entry)
+        db.session.add(bg_skill_2_entry)
+        db.session.add(car_skill_1_entry)
+        db.session.add(car_skill_2_entry)
         db.session.commit()
         flash("Your character has been sucessfully created.")
         return redirect("/")
