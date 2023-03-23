@@ -1,4 +1,4 @@
-from models import db, connect_db
+from models import db, connect_db, User
 from app import app
 
 app = app
