@@ -73,13 +73,13 @@
         <div data-bs-theme="dark"class="row p-1 justify-content-evenly">
           <div>
             {% with messages = get_flashed_messages() %}
-            {% if messages %}
-                {% for message in messages %}
-                    {{ message }}
-                {% endfor %}
-            {% endif %}
-        {% endwith %}
-        </div>
+              {% if messages %}
+                  {% for message in messages %}
+                      {{ message }}
+                  {% endfor %}
+              {% endif %}
+            {% endwith %}
+          </div>
             <div class="row">
                 <div class="col-lg-8 p-3 ms-lg-5 me-5 mt-1 text-body bg-body-secondary rounded-end border border-info">
                     <img src="\static\images\EclipsePhase_Logo_White.png" class="img-fluid">
