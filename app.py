@@ -15,10 +15,10 @@ if __name__ == '__app__':
     app.run()
 
 
-app.config['SQLALCHEMY_DATABASE_URI'] = ''
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://lttwzvcaneifna:9503d3e2037a1ba88e82dab4a9d24952d349dc148d1bc4adb2c32feebf4571f8@ec2-44-213-151-75.compute-1.amazonaws.com:5432/d7j6pbdutp2k58'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ECHO'] = False
-app.config['SECRET_KEY'] = ""
+app.config['SECRET_KEY'] = "leggolegoo"
 
 connect_db(app)
 
