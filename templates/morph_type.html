@@ -8,7 +8,7 @@
                         <div id ="left-nav" class="btn-group-vertical">    
                         </div>
                 </div>
-                <div class="col lg-8 p-3 me-5 mt-1 text-body bg-body-secondary rounded-end border border-info">
+                <div class="col-8 p-3 mt-1 me-3 text-body bg-body-secondary rounded border border-info d-block h-auto">
                     <h2><p id="name" class="text-info my-2"></p>{{ morph.name }}</h2>
                     <div class="col p-3 table-responsive">
                         <p><strong>Biological:</strong> {{ morph.biological }}</p>
@@ -23,7 +23,7 @@
                         </ul>
                     </div>
                 </div>
-                <div class="col-lg-3 p-3 mt-1 text-body bg-body-secondary rounded border border-info">
+                <div class="col p-3 mt-1 text-body bg-body-secondary rounded border border-info d-block h-auto">
                     <h2><p class="text-info my-2">Source</p></h2>
                     <div class="col p-3">
                     {% if morph.resource == "Eclipse Phase Second Edition" %}

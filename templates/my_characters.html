@@ -3,13 +3,29 @@
 {% block content %}
 <div class="row full-width">
   <div class="container">
-    <div class="row text-center">
+    <div class="row">
       <div class="col-12">
-          <div class="row justify-content-center"></div>
+          <div class="row text-center">
               <h2>Characters</h2>
               {% for character in characters %}
-              <p><a href="/characters/{{ character.id }}">{{ character.name }}</a></p>
+              <div class="col col-lg-3 py-2">
+                <div class="card mx-2">
+                  <img src="/static/images/blankchar.jpg" class="card-img-top" alt="{{ character.name }}'s Portrait">
+                  <div class="card-body">
+                    <h5 class="card-title text-center">{{ character.name }}</h5>
+                    <div class="card-text">
+                    </div>
+                    <div class="row">
+                      <form method="POST">
+                        <a href="/characters/{{ character.id }}" class="btn btn-primary float-start">View</a>
+                        <button class="btn btn-danger float-end" formaction="/characters/delete/{{ character.id }}" id="delete_char_btn">Delete</button>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
               {% endfor %}
+          </div>
       </div>
     </div>
   </div>

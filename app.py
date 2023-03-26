@@ -15,9 +15,10 @@ if __name__ == '__app__':
     app.run()
 
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://lttwzvcaneifna:9503d3e2037a1ba88e82dab4a9d24952d349dc148d1bc4adb2c32feebf4571f8@ec2-44-213-151-75.compute-1.amazonaws.com:5432/d7j6pbdutp2k58'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ECHO'] = False
-app.config['SECRET_KEY'] = 
+app.config['SECRET_KEY'] = "leggolegoo"
 
 connect_db(app)
 
@@ -160,6 +161,21 @@ def users_edit(user_id):
                 return render_template('users/edit.html', user=user, form=form)
         else: 
             return render_template('users/edit.html', user=user, form=form)
+        
+@app.route('/users/delete', methods=["POST"])
+def delete_user():
+    """Delete user."""
+
+    if not g.user:
+        flash("Access unauthorized.", "danger")
+        return redirect("/")
+
+    do_logout()
+
+    db.session.delete(g.user)
+    db.session.commit()
+
+    return redirect("/signup")
         
 #---Routes for Gear-------------------------------------------------------------------
 
@@ -323,6 +339,21 @@ def load_my_character_list():
                     .limit(100)
                     .all())
         return render_template('my_characters.html', user=user, characters=characters)
+    
+@app.route('/characters/delete/<int:char_id>', methods=["POST"])
+def delete_character(char_id):
+    """Delete character."""
+
+    character = Character.query.get_or_404(char_id)
+
+    if not g.user:
+        flash("Access unauthorized.", "danger")
+        return redirect("/")
+
+    db.session.delete(character)
+    db.session.commit()
+
+    return redirect("/characters/my")
     
 #----Search-----
 
