@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
     <div class = container-fluid bg-body-primary mt-3>
-        <div data-bs-theme="dark"class="row p-1 justify-content-evenly">
+        <div data-bs-theme="dark" class="row p-1 justify-content-evenly">
             <div class="row justify-content-center">
                     <div>
                         {% with messages = get_flashed_messages() %}
@@ -18,59 +18,93 @@
                     <form id="add-character-form" method="POST">
                         {{ form.hidden_tag() }} <!--add type=hidden form fields -->
                         <h4>Character Info</h4>
-                        <div class="row p-3">
-                            <div class="col" id="char-name">{{ form.name.label }} {{ form.name }}</div>
-                            <div class="col" id="char-template">{{ form.aptitude_template.label }} {{ form.aptitude_template }}</div>
+                    <div class="row">
+                        <div class="col-lg-7">
+                            <div class="row p-3">
+                                <div class="col" id="char-name">{{ form.name.label }} {{ form.name }}</div>
+                                <div class="col" id="char-template">{{ form.aptitude_template.label }} {{ form.aptitude_template }}</div>
+                            </div>
+                            <div class="row p-3">
+                                <div class="col" id="char-label" >{{ form.background.label }} {{ form.background }}</div>
+                                <div class="col" id="char-career">{{ form.career.label }} {{ form.career }}</div>
+                            </div>
+                            <div class="row p-3">
+                                <div class="col" id="char-interests">{{ form.interests.label }} {{ form.interests}}</div>
+                                <div class="col" id="char-faction">{{ form.faction.label }} {{ form.faction }}</div>
+                            </div>
+                            <div class="row p-3">
+                                <div class="col" id="char-lanugages">{{ form.languages.label }} {{ form.languages}}</div>
+                                <div class="col" id="char-morph">{{ form.morph.label }} {{ form.morph }}</div>
+                            </div>
                         </div>
-                        <div class="row p-3">
-                            <div class="col" id="char-label" >{{ form.background.label }} {{ form.background }}</div>
-                            <div class="col" id="char-career">{{ form.career.label }} {{ form.career }}</div>
+                        <div class="col-lg-5">
+                            <div class="row p-3">
+                                <div class="col" id="morph-stats">
+                                    <div class="row mb-4">
+                                        <div class="col" id="morph-name"><strong>Morph Name:</strong></div>
+                                    </div>
+                                    <div class="row justify-content-center">
+                                        <div class="col-3 rounded-bottom border border-info text-center" id="insight"><strong>Insight</strong><h4>0</h4></div>
+                                        <div class="col-3 rounded-bottom border border-info text-center" id="moxie"><strong>Moxie</strong><h4>0</h4></div>
+                                        <div class="col-3 rounded-bottom border border-info text-center" id="vigor"><strong>Vigor</strong><h4>0</h4></div>
+                                        <div class="col-3 rounded-bottom border border-info text-center" id="flex"><strong>Flex</strong><h4>0</h4></div>
+                                    </div>
+                                    <div class="row justify-content-center my-2 align-items-end">
+                                        <div class="col-3 border-bottom border-info text-center mx-1" id="wound-threshold"><strong>Wound Threshold</strong><h4>0</h4></div>
+                                        <div class="col-3 border-bottom border-info text-center mx-1" id="durability"><strong>Durability</strong><h4>0</h4></div>
+                                        <div class="col-3 border-bottom border-info text-center mx-1" id="death-rating"><strong>Death Rating</strong><h4>0</h4></div>
+                                    </div>
+                                    <div class="row my-lg-2">
+                                        <div class="col" id="movement-rate"><strong>Movement Rate:</strong></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col col-lg-1" id="ware"><strong>Ware:</strong></div>
+                                        <div id="ware-list" class="col col-lg-10"></div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="row p-3">
-                            <div class="col" id="char-interests">{{ form.interests.label }} {{ form.interests}}</div>
-                            <div class="col" id="char-faction">{{ form.faction.label }} {{ form.faction }}</div>
-                        </div>
-                        <div class="row p-3">
-                            <div class="col" id="char-lanugages">{{ form.languages.label }} {{ form.languages}}</div>
-                            <div class="col" id="char-morph">{{ form.morph.label }} {{ form.morph }}</div>
-                        </div>
+                    </div>
                         <div class="my-3 g-body-secondary rounded-end border border-info"></div>
                         <div class="row p-3">
                             <div class="col-lg-6">
                                 <h4>Aptitudes & Derived Stats</h4>
                                 <div class="row">
-                                    <div class="col-lg-2 p-lg-3 border border-info text-center" id="cognition"><strong>COG</strong></div>
-                                    <div class="col-lg-2 p-lg-3 border border-info text-center" id="intuition"><strong>INT</strong></div>
-                                    <div class="col-lg-2 p-lg-3 border border-info text-center" id="reflexes"><strong>REF</strong></div>
-                                    <div class="col-lg-2 p-lg-3 border border-info text-center" id="savvy"><strong>SAV</strong></div>
-                                    <div class="col-lg-2 p-lg-3 border border-info text-center" id="somatics"><strong>SOM</strong></div>
-                                    <div class="col-lg-2 p-lg-3 border border-info text-center" id="willpower"><strong>WIL</strong></div>
+                                    <div class="col-lg-2 p-lg-3 border border-info text-center" id="cognition"><strong>COG</strong><h4>0</h4></div>
+                                    <div class="col-lg-2 p-lg-3 border border-info text-center" id="intuition"><strong>INT</strong><h4>0</h4></div>
+                                    <div class="col-lg-2 p-lg-3 border border-info text-center" id="reflexes"><strong>REF</strong><h4>0</h4></div>
+                                    <div class="col-lg-2 p-lg-3 border border-info text-center" id="savvy"><strong>SAV</strong><h4>0</h4></div>
+                                    <div class="col-lg-2 p-lg-3 border border-info text-center" id="somatics"><strong>SOM</strong><h4>0</h4></div>
+                                    <div class="col-lg-2 p-lg-3 border border-info text-center" id="willpower"><strong>WIL</strong><h4>0</h4></div>
                                 </div>
-                                <div class="row">
-                                    <div class="col border border-info border-top-0 text-center" id="initiative"><strong>Initiative</strong></div>
-                                    <div class="col border border-info border-top-0 text-center" id="lucidity"><strong>Lucidity</strong></div>
-                                    <div class="col border border-info border-top-0 text-center" id="trauma_threshold"><strong>Trauma Threshold</strong></div>
-                                    <div class="col border border-info border-top-0 text-center" id="insanity_rating"><strong>Insanity Rating</strong></div>
+                                <div class="row align-items-end">
+                                    <div class="col border-bottom border-info text-center" id="initiative"><strong>Initiative</strong><h4>0</h4></div>
+                                    <div class="col border-bottom border-info text-center mx-1" id="lucidity"><strong>Lucidity</strong><h4>0</h4></div>
+                                    <div class="col border-bottom border-info text-center mx-1" id="trauma_threshold"><strong>Trauma Threshold</strong><h4>0</h4></div>
+                                    <div class="col border-bottom border-info text-center" id="insanity_rating"><strong>Insanity Rating</strong><h4>0</h4></div>
                                 </div>
                                 <div class="row">
                                     <h4 class="h4 mt-lg-3">Know Skills</h4>
-                                    <div id="bg-know-row"></div>
+                                    <div class="col" id="bg-know-row"></div>
+                                    <div class="col" id="car-know-row"></div>
                                     <div id="int-know-row"></div>
-                                    <div id="car-know-row"></div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
-                                <div class="row m-lg-1">
+                                <div class="row m-lg-1 justify-content-center">
                                     <h4>Active Skills</h4>
                                     {% for skill in skills %}
                                         {% if skill.know == False %}
-                                            <div class="col-6 col-lg-3 py-1 me-1 border-bottom border-info" id="{{ skill.name|lower }}"><strong>{{ skill.name }}</strong><h4 class="h4 text-end" id="{{ skill.name|lower }}_value">0</h4></div>
+                                            <div class="col-5 col-lg-3 py-1 me-1 border-bottom border-info" id="{{ skill.name|lower }}"><strong>{{ skill.name }}</strong><h4 class="h4 text-end" id="{{ skill.name|lower }}_value">0</h4></div>
                                         {% endif %}
                                     {% endfor %}
                                 </div>
                             </div>
                         </div>
-                        <button type="submit">Submit</button>
+                        <div class="row justify-content-center">
+                                <button type="submit" id="submit-char" class="btn btn-outline-info">Add Character</button>
+                            </div>
+                        </div>
                     </form>
                 </div>
                 

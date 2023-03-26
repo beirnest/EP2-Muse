@@ -3,6 +3,7 @@ from forms import UserAddForm, LoginForm, AddCharacterForm, EditUserForm
 from flask_cors import CORS
 from models import db, connect_db, User, Character, Char_Skill
 import requests
+import json
 
 
 CURR_USER_KEY = "curr_user"
@@ -231,6 +232,7 @@ def show_character(char_id):
     """Show single character page"""
 
     character = Character.query.get_or_404(char_id)
+    char_skills = Char_Skill.query.filter(Char_Skill.char_id==char_id)
     if g.user.id != character.user_id:
         flash("You are unable to view this character.", "danger")
         return redirect("/")
@@ -249,7 +251,7 @@ def show_character(char_id):
         morph = m.json()
         s = requests.get(f'https://ep2-data-api.herokuapp.com/skills') 
         skills = s.json()
-        return render_template('/view_character.html', user=g.user, character=character, background=background, career=career, interests=interests, faction=faction, aptitude=aptitude, morph=morph, skills=skills, value=0)
+        return render_template('/view_character.html', user=g.user, character=character, background=background, career=career, interests=interests, faction=faction, aptitude=aptitude, morph=morph, skills=skills, char_skills=char_skills)
 
 @app.route('/characters/add', methods=["GET", "POST"])
 def show_add_character():
@@ -282,21 +284,21 @@ def show_add_character():
         morphs = form.morph.data
         morph = get_item_index("morphs", morphs)
         character = Character(user_id=user, name=name, background=background, career=career, faction=faction, aptitude=aptitude, languages=languages, interests=interest, morph=morph)
+        db.session.add(character)
+        db.session.commit()
+        db.session.refresh(character)
         bg_skill_1 = request.form.get('bg-know-select-1')
-        print(bg_skill_1)
         bg_skill_2 = request.form.get('bg-know-select-2')
         bg_skill_1_index = get_item_index("skills", bg_skill_1)
-        print(bg_skill_1_index)
-        bg_skill_1_entry = Char_Skill(user_id=user, skill=bg_skill_1_index, amt=60)
+        bg_skill_1_entry = Char_Skill(char_id=character.id, skill=bg_skill_1_index, amt=60, skill_name=bg_skill_1)
         bg_skill_2_index = get_item_index("skills", bg_skill_2)
-        bg_skill_2_entry = Char_Skill(user_id=user, skill=bg_skill_2_index, amt=30)
+        bg_skill_2_entry = Char_Skill(char_id=character.id, skill=bg_skill_2_index, amt=30, skill_name=bg_skill_2)
         car_skill_1 = request.form.get('car-know-select-1')
         car_skill_2 = request.form.get('car-know-select-2')
         car_skill_1_index = get_item_index("skills", car_skill_1)
-        car_skill_1_entry = Char_Skill(user_id=user, skill=car_skill_1_index, amt=60)
+        car_skill_1_entry = Char_Skill(char_id=character.id, skill=car_skill_1_index, amt=60, skill_name=car_skill_1)
         car_skill_2_index = get_item_index("skills", car_skill_2)
-        car_skill_2_entry = Char_Skill(user_id=user, skill=car_skill_2_index, amt=30)
-        db.session.add(character)
+        car_skill_2_entry = Char_Skill(char_id=character.id, skill=car_skill_2_index, amt=30, skill_name=car_skill_2)
         db.session.add(bg_skill_1_entry)
         db.session.add(bg_skill_2_entry)
         db.session.add(car_skill_1_entry)
@@ -322,6 +324,28 @@ def load_my_character_list():
                     .limit(100)
                     .all())
         return render_template('my_characters.html', user=user, characters=characters)
+    
+#----Search-----
+
+@app.route('/search', methods=['GET', 'POST'])
+def run_search():
+    r = requests.get(f'https://ep2-data-api.herokuapp.com/all') 
+    response = r.json()
+    term = request.args.get("term").lower()
+
+
+    data = []
+
+    print(type(term))
+
+    for i in response:
+       if term in str(i.keys()).lower() or term in str(i.values()).lower():
+           data.append(i)
+
+    
+
+
+    return render_template('search.html', term=term, data=data)
 
 
 
@@ -339,3 +363,12 @@ def get_item_index(stat, data):
         else:
             count += 1
     return count
+
+def search(values, searchFor):
+    """S"""
+    for k in values:
+        for v in values[k]:
+            if searchFor in v:
+                return k
+    return None
+

@@ -1,0 +1,27 @@
+select {
+    background-color: #343a40;
+    color: #0dcaf0;
+    border-top-style: hidden;
+    border-right-style: hidden;
+    border-left-style: hidden;
+    border-bottom-style: groove;
+}
+
+input {
+    background-color: #343a40;
+    color: #0dcaf0;
+    border-top-style: hidden;
+    border-right-style: hidden;
+    border-left-style: hidden;
+    border-bottom-style: groove;
+}
+
+#submit-char{
+    background-color: #0dcaf0;
+    color: black;
+    font-weight: 500;
+}
+
+.no-outline:focus {
+    outline: none;
+  }

@@ -53,6 +53,38 @@ $("#aptitude_template").change(function(evt) {
         }
     }
   }).change();
+  
+$("#morph").change(function(evt) {
+
+let str = evt.target.value;
+    if (str != "--- Select One ---"){
+        get_aptitude_template(str);
+    }
+    async function get_aptitude_template(str){
+    let request = await axios.get('https://ep2-data-api.herokuapp.com/morphs');
+    let morphs = request.data
+    for (let i=0; i < morphs.length; i++){
+        if (morphs[i].name == str){
+            $(`#insight`).html(`<strong>Insight</strong><h4>${morphs[i].pools.insight}</h4>`);
+            $(`#moxie`).html(`<strong>Moxie</strong><h4>${morphs[i].pools.moxie}</h4>`);
+            $(`#vigor`).html(`<strong>Vigor</strong><h4>${morphs[i].pools.vigor}</h4>`);
+            $(`#flex`).html(`<strong>Flex</strong><h4>${morphs[i].pools.flex + 1}</h4>`);
+            
+            $(`#wound-threshold`).html(`<strong>Would Threshold</strong><h4>${morphs[i].wound_threshold}</h4>`);
+            $(`#durability`).html(`<strong>Durability</strong><h4>${morphs[i].durability}</h4>`);
+            $(`#death-rating`).html(`<strong>Death Rating</strong><h4>${morphs[i].death_rating}</h4>`);
+            $(`#morph-name`).html(`<strong>Morph Name:</strong> ${morphs[i].name}`);
+
+            $(`#movement-rate`).html(`<strong>Movement Rate:</strong> ${morphs[i].movement_rate[0].base} / ${morphs[i].movement_rate[0].full}`);
+            $(`#ware-list`).empty();
+            $(`#ware`).html(`<strong>Ware:</strong>`)
+            for (let w = 0; w < morphs[i].ware.length; w++){
+                $(`#ware-list`).append(`<p>${morphs[i].ware[w]}</p>`);
+            }
+        }
+    }
+}
+}).change();
 
 $("#background").change(function(evt) {
     
@@ -259,6 +291,7 @@ $("#career").change(function(evt) {
                             selectNum += 1;
                             let select = document.createElement("select")
                             select.setAttribute("id", `car-know-select-${selectNum}`)
+                            select.setAttribute("name", `car-know-select-${selectNum}`)
                             select.setAttribute("class", `select m-2`)
                             $("#car-know-row").append(select);
                             select.innerHTML = '<option value="--- Select One ---">--- Select One ---</option>'
@@ -359,7 +392,6 @@ $("#car-know-row").change(function(evt) {
         }
     }
 })
-
 
 async function load_career_list() {
     let request = await axios.get('https://ep2-data-api.herokuapp.com/careers');

@@ -16,23 +16,61 @@
             </div>
             <div class="row justify-content-center">
                 <div class="col p-3 mx-5 mt-1 text-body bg-body-secondary rounded border border-info">
-                        <h4>Character Info</h4>
-                        <div class="row p-3">
-                            <div class="col" id="char-name"><strong>Name:</strong> {{ character.name }}</div>
-                            <div class="col" id="char-template"><strong>Aptitude Template:</strong> {{ aptitude.name }}</div>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="row">
+                                <h4>Character Info</h4>
+                                <div class="col">
+                                    <div class="row p-3">
+                                        <div class="col" id="char-name"><strong>Name:</strong> {{ character.name }}</div>
+                                        <div class="col" id="char-template"><strong>Aptitude Template:</strong> {{ aptitude.name }}</div>
+                                    </div>
+                                    <div class="row p-3">
+                                        <div class="col" id="char-label" ><strong>Background:</strong> {{ background.name }}</div>
+                                        <div class="col" id="char-career"><strong>Career:</strong> {{ career.name }}</div>
+                                    </div>
+                                    <div class="row p-3">
+                                        <div class="col" id="char-interests"><strong>Interests:</strong> {{ interests.name }}</div>
+                                        <div class="col" id="char-faction"><strong>Faction:</strong> {{ faction.name }}</div>
+                                    </div>
+                                    <div class="row p-3">
+                                        <div class="col" id="char-lanugages"><strong>Lanugages:</strong> {{ character.languages }}</div>
+                                        <div class="col" id="char-morph"><strong>Morph:</strong> {{ morph.name }}</div>
+                                    </div>
+                            </div>
                         </div>
-                        <div class="row p-3">
-                            <div class="col" id="char-label" ><strong>Background:</strong> {{ background.name }}</div>
-                            <div class="col" id="char-career"><strong>Career:</strong> {{ career.name }}</div>
                         </div>
-                        <div class="row p-3">
-                            <div class="col" id="char-interests"><strong>Interests:</strong> {{ interests.name }}</div>
-                            <div class="col" id="char-faction"><strong>Faction:</strong> {{ faction.name }}</div>
+                        <div class="col-lg-5">
+                            <div class="col" id="morph-stats">
+                                <h4>Morph Info</h4>
+                                <div class="row mb-4">
+                                    <div class="col" id="morph-name"><strong>Morph Name:</strong> {{ morph.name }}</div>
+                                </div>
+                                <div class="row justify-content-center">
+                                    <div class="col-3 rounded-bottom border border-info text-center" id="insight"><strong>Insight</strong><h4>{{ morph.pools.insight }}</h4></div>
+                                    <div class="col-3 rounded-bottom border border-info text-center" id="moxie"><strong>Moxie</strong><h4>{{ morph.pools.moxie }}</h4></div>
+                                    <div class="col-3 rounded-bottom border border-info text-center" id="vigor"><strong>Vigor</strong><h4>{{ morph.pools.vigor }}</h4></div>
+                                    <div class="col-3 rounded-bottom border border-info text-center" id="flex"><strong>Flex</strong><h4>{{ morph.pools.flex + 1}}</h4></div>
+                                </div>
+                                <div class="row justify-content-center my-2">
+                                    <div class="col-3 border-bottom border-info text-center mx-1" id="wound-threshold"><strong>Wound Threshold</strong><h4>{{ morph.wound_threshold }}</h4></div>
+                                    <div class="col-3 border-bottom border-info text-center mx-1" id="durability"><strong>Durability</strong><h4>{{ morph.durability}}</h4></div>
+                                    <div class="col-3 border-bottom border-info text-center mx-1" id="death-rating"><strong>Death Rating</strong><h4>{{ morph.death_rating }}</h4></div>
+                                </div>
+                                <div class="row my-lg-2">
+                                    <div class="col" id="movement-rate"><strong>Movement Rate:</strong> {{ morph.movement_rate[0].base }} / {{ morph.movement_rate[0].full }}</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12 col-lg-1" id="ware"><strong>Ware:</strong></div>
+                                    <div id="ware-list" class="col-12 col-lg-10">
+                                        {% for ware in morph.ware%}
+                                        <p>{{ ware }}</p>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="row p-3">
-                            <div class="col" id="char-lanugages"><strong>Lanugages:</strong> {{ character.languages }}</div>
-                            <div class="col" id="char-morph"><strong>Morph:</strong> {{ morph.name }}</div>
-                        </div>
+                    </div>
                         <div class="my-3 g-body-secondary rounded-end border border-info"></div>
                         <div class="row p-3">
                             <div class="col-lg-6">
@@ -52,19 +90,19 @@
                                     <div class="col border border-info border-top-0 text-center" id="insanity_rating"><div class="row"><div class="col text-center">Insanity Rating</div></div><div><h4>{{ ((aptitude.aptitudes.willpower * 2)*2)|int }}</h4></div></div>
                                 </div>
                                 <div class="row">
-                                    <h4 class="h4 mt-lg-3">Know Skills</h4>
-                                    <div id="bg-know-row"></div>
-                                    <div id="int-know-row"></div>
-                                    <div id="car-know-row"></div>
+                                    <h4 class="h4 mt-lg-3 justify-content-center">Know Skills</h4>
+                                    {% for char_skill in char_skills %}
+                                    <div class="col-5 col-lg-2 py-1 me-1 border-bottom border-info"><strong>{{ char_skill.skill_name }}</strong><h4 class="h4 text-end align-bottom">{{ char_skill.amt }}</h4></div>
+                                    {% endfor %}
                                 </div>
                             </div>
                             <div class="col-lg-6">
-                                <div class="row m-lg-1">
+                                <div class="row m-lg-1 justify-content-center justify-content-lg-evenly">
                                     <h4>Active Skills</h4>
                                     {% for skill in skills %}
                                         {% if skill.know == False %}
                                         {% set value = [] %}
-                                            <div class="col-6 col-lg-3 py-1 me-1 border-bottom border-info" id="{{ skill.name|lower }}"><strong>{{ skill.name }}</strong><h4 class="h4 text-end" id="{{ skill.name|lower }}_value">
+                                            <div class="col-5 col-lg-2 py-1 me-2 border-bottom border-info" id="{{ skill.name|lower }}"><strong>{{ skill.name }}</strong><h4 class="h4 text-end" id="{{ skill.name|lower }}_value">
                                                 {% for bg_skill in background.skills %}
                                                     {% if bg_skill.name|lower == skill.name|lower %}
                                                         {% set bg_value = bg_skill.rating %}
